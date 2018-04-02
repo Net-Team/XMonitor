@@ -20,7 +20,7 @@ namespace WebSiteMonitor
                     n.Smtp = "mail.taichuan.com";
                     n.SenderAccout = "iot@taichaun.com";
                     n.SenderPassword = "tc123457";
-                    n.TargetEmails.Add("42309073@qq.com");
+                    n.TargetEmails.Add("tangfeng@taichuan.com");
                     n.Title = ctx => "v1.0" + ctx.SourceName;
                 });
                 opt.UseHttpNotifyChannel(n =>
@@ -39,7 +39,7 @@ namespace WebSiteMonitor
                     n.Smtp = "mail.taichuan.com";
                     n.SenderAccout = "iot@taichaun.com";
                     n.SenderPassword = "tc123457";
-                    n.TargetEmails.Add("42309073@qq.com");
+                    n.TargetEmails.Add("tangfeng@taichuan.com");
                     n.Title = ctx => "v1.0" + ctx.SourceName;
                 });
             });
