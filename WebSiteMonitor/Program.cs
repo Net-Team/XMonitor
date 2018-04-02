@@ -16,7 +16,7 @@ namespace WebSiteMonitor
             {
                 opt.TargetUrls.Add(new Uri("http://iot.taichuan.net/404"));
                 opt.UseEmailNotifyChannel(n =>
-                {   
+                {
                     n.Smtp = "mail.taichuan.com";
                     n.SenderAccout = "iot@taichaun.com";
                     n.SenderPassword = "tc123457";
@@ -29,6 +29,8 @@ namespace WebSiteMonitor
                     n.Header.Add(new KeyValuePair<string, string>("key", "value"));
                     n.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.SourceName + "v1.0");
                 });
+                opt.Logger = new MonitorLoger();
+
             });
 
             services.UseServiceStatusMonitor(opt =>
@@ -42,6 +44,7 @@ namespace WebSiteMonitor
                     n.TargetEmails.Add("tangfeng@taichuan.com");
                     n.Title = ctx => "v1.0" + ctx.SourceName;
                 });
+                opt.Logger = new MonitorLoger();
             });
 
             services.Start();
