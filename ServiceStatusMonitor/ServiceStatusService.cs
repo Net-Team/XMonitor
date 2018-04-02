@@ -1,5 +1,6 @@
 ﻿using MonitorServices;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace ServiceStatusMonitor
 {
+    /// <summary>
+    /// 表示服务进程状态检测服务
+    /// </summary>
     class ServiceStatusService : IMonitorService
     {
         /// <summary>
@@ -17,41 +21,33 @@ namespace ServiceStatusMonitor
         private readonly ServiceOptions options;
 
         /// <summary>
+        /// 服务缓存
+        /// </summary>
+        private readonly ConcurrentDictionary<string, ServiceController> services;
+
+        /// <summary>
         /// 获取或设置是否在运行
         /// </summary>
         public bool IsRunning { get; private set; }
 
         /// <summary>
-        /// 当前服务
-        /// </summary>
-        private ServiceController _service { get; set; }
-
-        /// <summary>
-        /// http状态检测服务
+        /// 服务进程状态检测服务
         /// </summary>
         /// <param name="options">选项</param>
         public ServiceStatusService(ServiceOptions options)
         {
             this.options = options;
-        }
-
-
-        public async void Start()
-        {
-            this.IsRunning = true;
-            await this.RunAsync();
+            this.services = new ConcurrentDictionary<string, ServiceController>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        /// 获取服务运行状态
+        /// 启动监控
         /// </summary>
-        /// <param name="serviceName">服务名称</param>
-        /// <returns></returns>
-        private bool CheckServiceStatus(string serviceName)
+        public async void Start()
         {
-            this._service = new ServiceController(serviceName);
-            this._service.Refresh();
-            return this._service.Status != ServiceControllerStatus.Stopped;
+            this.IsRunning = true;
+            await Task.Yield();
+            await this.RunAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -62,20 +58,21 @@ namespace ServiceStatusMonitor
         {
             while (this.IsRunning == true)
             {
-                foreach (var item in this.options.Monitors)
+                foreach (var monitor in this.options.Monitors)
                 {
                     try
                     {
-                        if (this.CheckServiceStatus(item.Value) == false)
+                        var service = this.GetServiceByName(monitor.Value);
+                        if (service.Status == ServiceControllerStatus.Stopped)
                         {
                             this.options.Logger?.Debug("服务被停止,正在恢复.");
-                            this._service.Start();
-                            await this.NotifyAsync(item, new Exception("服务被停止,已恢复启动."));
+                            service.Start();
+                            await this.NotifyAsync(monitor, new Exception("服务被停止,已恢复启动."));
                         }
                     }
                     catch (Exception ex)
                     {
-                        await this.NotifyAsync(item, ex);
+                        await this.NotifyAsync(monitor, ex);
                         this.options.Logger?.Error(ex);
                     }
                 }
@@ -83,12 +80,17 @@ namespace ServiceStatusMonitor
             }
         }
 
+
         /// <summary>
-        /// 停止监控
+        /// 通过服务名称查找服务
         /// </summary>
-        public void Stop()
+        /// <param name="name">服务名称</param>
+        /// <returns></returns>
+        private ServiceController GetServiceByName(string name)
         {
-            this.IsRunning = false;
+            var service = this.services.GetOrAdd(name, n => new ServiceController(n));
+            service.Refresh();
+            return service;
         }
 
         /// <summary>
@@ -105,17 +107,26 @@ namespace ServiceStatusMonitor
                 Exception = exception,
             };
 
-            foreach (var item in this.options.NotifyChannels)
+            foreach (var channel in this.options.NotifyChannels)
             {
                 try
                 {
-                    await item?.NotifyAsync(context);
+                    await channel?.NotifyAsync(context);
                 }
                 catch (Exception ex)
                 {
                     this.options.Logger?.Error(ex);
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 停止监控
+        /// </summary>
+        public void Stop()
+        {
+            this.IsRunning = false;
         }
     }
 }

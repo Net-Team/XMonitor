@@ -44,7 +44,8 @@ namespace HttpStatusMonitor
         public async void Start()
         {
             this.IsRunning = true;
-            await this.RunAsync();
+            await Task.Yield();
+            await this.RunAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -55,15 +56,15 @@ namespace HttpStatusMonitor
         {
             while (this.IsRunning == true)
             {
-                foreach (var item in this.options.Monitors)
+                foreach (var monitor in this.options.Monitors)
                 {
                     try
                     {
-                        await this.CheckHttpStatusAsync(item.Value);
+                        await this.CheckHttpStatusAsync(monitor.Value);
                     }
                     catch (HttpRequestException ex)
                     {
-                        await this.NotifyAsync(item, ex);
+                        await this.NotifyAsync(monitor, ex);
                     }
                     catch (Exception ex)
                     {
@@ -106,11 +107,11 @@ namespace HttpStatusMonitor
                 Exception = exception
             };
 
-            foreach (var item in this.options.NotifyChannels)
+            foreach (var channel in this.options.NotifyChannels)
             {
                 try
                 {
-                    await item?.NotifyAsync(context);
+                    await channel?.NotifyAsync(context);
                 }
                 catch (Exception ex)
                 {
