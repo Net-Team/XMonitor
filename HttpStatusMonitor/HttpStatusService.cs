@@ -3,27 +3,9 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebApiClient;
-using WebApiClient.Attributes;
-using WebApiClient.Contexts;
-using WebApiClient.Parameterables;
 
 namespace HttpStatusMonitor
 {
-    /// <summary>
-    /// 定义Http状态接口
-    /// </summary>
-    public interface IHttpStatusApi : IDisposable
-    {
-        /// <summary>
-        /// 检测指定URL
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="timeout"></param>
-        /// <returns></returns>
-        [HttpGet]
-        ITask<HttpResponseMessage> CheckAsync([Url] Uri url, Timeout timeout);
-    }
-
     /// <summary>
     /// 表示http状态检测服务
     /// </summary>
@@ -32,7 +14,7 @@ namespace HttpStatusMonitor
         /// <summary>
         /// 选项
         /// </summary>
-        private readonly Options options;
+        private readonly HttpOptions options;
 
         /// <summary>
         /// api客户端
@@ -48,7 +30,7 @@ namespace HttpStatusMonitor
         /// http状态检测服务
         /// </summary>
         /// <param name="options">选项</param>
-        public HttpStatusService(Options options)
+        public HttpStatusService(HttpOptions options)
         {
             this.options = options;
             var config = new HttpApiConfig();
@@ -139,39 +121,6 @@ namespace HttpStatusMonitor
         public void Dispose()
         {
             this.httpStatusApi.Dispose();
-        }
-
-        /// <summary>
-        /// http状态过滤器
-        /// </summary>
-        class HttpStatusFilter : ApiActionFilterAttribute
-        {
-            /// <summary>
-            /// 选项
-            /// </summary>
-            private readonly Options options;
-
-            /// <summary>
-            /// http状态过滤器
-            /// </summary>
-            /// <param name="options"></param>
-            public HttpStatusFilter(Options options)
-            {
-                this.options = options;
-            }
-
-            public override async Task OnEndRequestAsync(ApiActionContext context)
-            {
-                await base.OnEndRequestAsync(context);
-                var response = context.ResponseMessage;
-
-                if (this.options.HttpStatusFilter?.Invoke(response.StatusCode) == false ||
-                    this.options.HttpContentFilter?.Invoke(await response.Content.ReadAsStringAsync()) == false)
-                {
-                    var ex = new Exception("远程服务器响应状态或内容不符合预期");
-                    throw new HttpFailureStatusException(response.StatusCode, context, ex);
-                }
-            }
-        }
+        }       
     }
 }

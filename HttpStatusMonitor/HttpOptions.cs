@@ -10,7 +10,7 @@ namespace HttpStatusMonitor
     /// <summary>
     /// 表示http状态码监控的配置项
     /// </summary>
-    public class Options
+    public class HttpOptions
     {
         /// <summary>
         /// 获取或设置检测的时间间隔
@@ -52,7 +52,7 @@ namespace HttpStatusMonitor
         /// <summary>
         /// http状态码监控的配置项
         /// </summary>
-        public Options()
+        public HttpOptions()
         {
             this.HttpStatusFilter = this.IsSuccessStatusCode;
         }
