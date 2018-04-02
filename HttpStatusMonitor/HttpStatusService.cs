@@ -1,4 +1,4 @@
-﻿using Services;
+﻿using MonitorServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace HttpStatusMonitor
     /// <summary>
     /// 表示http状态检测服务
     /// </summary>
-    class HttpStatusService : IService
+    class HttpStatusService : IMonitorService
     {
         /// <summary>
         /// 选项

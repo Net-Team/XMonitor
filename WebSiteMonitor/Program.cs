@@ -1,5 +1,5 @@
 ﻿using HttpStatusMonitor;
-using Services;
+using MonitorServices;
 using System;
 
 namespace WebSiteMonitor

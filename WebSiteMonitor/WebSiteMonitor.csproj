@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HttpStatusMonitor\HttpStatusMonitor.csproj" />
-    <ProjectReference Include="..\Services\Services.csproj" />
+    <ProjectReference Include="..\MonitorServices\MonitorServices.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,17 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace MonitorServices
 {
     /// <summary>
     /// 表示服务集合
     /// </summary>
-    public class ServiceCollection : IEnumerable<IService>
+    public class ServiceCollection : IEnumerable<IMonitorService>
     {
         /// <summary>
         /// 服务集合
         /// </summary>
-        private readonly List<IService> serviceList = new List<IService>();
+        private readonly List<IMonitorService> serviceList = new List<IMonitorService>();
 
         /// <summary>
         /// 获取服务的数量
@@ -32,7 +32,7 @@ namespace Services
         /// </summary>
         /// <param name="service"></param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void Add(IService service)
+        public void Add(IMonitorService service)
         {
             if (service == null)
             {
@@ -79,7 +79,7 @@ namespace Services
         /// 返回迭代器
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<IService> GetEnumerator()
+        public IEnumerator<IMonitorService> GetEnumerator()
         {
             return this.serviceList.GetEnumerator();
         }

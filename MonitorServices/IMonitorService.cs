@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace MonitorServices
 {
     /// <summary>
-    /// 定义服务接口
+    /// 定义监控服务接口
     /// </summary>
-    public interface IService
+    public interface IMonitorService
     {
         /// <summary>
         /// 启动服务
