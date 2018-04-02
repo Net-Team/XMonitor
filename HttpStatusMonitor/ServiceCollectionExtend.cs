@@ -1,7 +1,7 @@
-﻿using MonitorServices;
+﻿using HttpStatusMonitor;
 using System;
 
-namespace HttpStatusMonitor
+namespace MonitorServices
 {
     /// <summary>
     ///  ServiceCollection扩展

@@ -1,11 +1,7 @@
-﻿using MonitorServices;
+﻿using ServiceStatusMonitor;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ServiceStatusMonitor
+namespace MonitorServices
 {
     /// <summary>
     ///  ServiceCollection扩展
