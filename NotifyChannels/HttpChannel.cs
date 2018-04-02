@@ -10,21 +10,40 @@ using WebApiClient.Attributes;
 
 namespace NotifyChannels
 {
-
     /// <summary>
     /// 异常通知
     /// </summary>
     public class HttpChannel : INotifyChannel
     {
         /// <summary>
-        /// 异常通知接口
+        /// Http 异常通知接口
         /// </summary>
-        private readonly ISendApi SendApi = HttpApiClient.Create<ISendApi>();
+        public interface IHttpNotifyClient : IDisposable
+        {
+            /// <summary>
+            /// 发送Http请求
+            /// </summary>
+            /// <param name="url"></param>
+            /// <param name="header">请求头</param>
+            /// <param name="content">内容</param>
+            /// <returns></returns>
+            [HttpPost]
+            ITask<HttpResponseMessage> SendNotifyAsync(
+                [Url] Uri url,
+                [Headers] IEnumerable<KeyValuePair<string, string>> header,
+                [FormContent] List<KeyValuePair<string, string>> content);
+        }
+
 
         /// <summary>
         /// 选项
         /// </summary>
-        private readonly HttpChannelOptions opts;
+        private readonly HttpChannelOptions opt;
+
+        /// <summary>
+        /// 异常通知接口
+        /// </summary>
+        private readonly IHttpNotifyClient httpNotifyClient = HttpApiClient.Create<IHttpNotifyClient>();
 
         /// <summary>
         /// Http 异常通知
@@ -32,7 +51,7 @@ namespace NotifyChannels
         /// <param name="opt">选项</param>
         public HttpChannel(HttpChannelOptions opt)
         {
-            this.opts = opt;
+            this.opt = opt;
         }
 
         /// <summary>
@@ -42,33 +61,13 @@ namespace NotifyChannels
         /// <returns></returns>
         public async Task NotifyAsync(NotifyContext context)
         {
-            var dic = new List<KeyValuePair<string, string>>();
-            dic.Add(this.opts.TitleParameter(context));
-            dic.Add(this.opts.MessageParameter(context));
+            var parameters = new List<KeyValuePair<string, string>>();
+            parameters.Add(this.opt.TitleParameter(context));
+            parameters.Add(this.opt.MessageParameter(context));
 
-            await SendApi
-                .SendAsync(this.opts.TargetUri, this.opts.Header, dic)
+            await this.httpNotifyClient
+                .SendNotifyAsync(this.opt.TargetUri, this.opt.Header, parameters)
                 .HandleAsDefaultWhenException();
         }
-    }
-
-    /// <summary>
-    /// Http 异常通知接口
-    /// </summary>
-    public interface ISendApi : IDisposable
-    {
-        /// <summary>
-        /// 发送Http请求
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="header">请求头</param>
-        /// <param name="content">内容</param>
-        /// <returns></returns>
-        [HttpPost]
-        ITask<HttpResponseMessage> SendAsync(
-            [Url] Uri url,
-            [Headers] IEnumerable<KeyValuePair<string, string>> header,
-            [FormContent] List<KeyValuePair<string, string>> content
-            );
     }
 }

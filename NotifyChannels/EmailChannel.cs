@@ -37,7 +37,7 @@ namespace NotifyChannels
         {
             var title = this.opt.TitleParameter.Invoke(context);
             var message = this.opt.MessageParameter.Invoke(context);
-            await this.SendAsync(title, message);
+            await this.SendEmailAsync(title, message);
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace NotifyChannels
         /// <param name="title">标题</param>
         /// <param name="body">内容</param>
         /// <returns></returns>
-        private async Task SendAsync(string title, string body)
+        private async Task SendEmailAsync(string title, string body)
         {
             var msg = new MailMessage
             {
