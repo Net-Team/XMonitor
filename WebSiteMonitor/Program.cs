@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HttpStatusMonitor;
+using Services;
+using System;
 
 namespace WebSiteMonitor
 {
@@ -7,17 +9,15 @@ namespace WebSiteMonitor
         static void Main(string[] args)
         {
             var services = new ServiceCollection();
-            services.AddExceptionService(opt =>
+
+            services.AddHttpStatusMonitor(opt =>
             {
-                opt.UseEmailNotifyChannel(e => e.TargetEmail = "qq@qq.com");
+                opt.UseEmailNotifyChannel(e => e.TargetEmails.Add("qq@qq.com"));
             });
 
-            foreach (var item in services)
-            {
-                item.StartAsync();
-            }
+            services.Start();
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Hello WebSiteMonitor!");
         }
     }
 }

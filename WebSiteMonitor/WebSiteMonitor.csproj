@@ -2,11 +2,15 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net45;netcoreapp2.0;netstandard2.0</TargetFrameworks>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\WebSiteMonitor.xml</DocumentationFile>
+    <TargetFrameworks>net45;netcoreapp2.0;netstandard2.0</TargetFrameworks>   
     <NoWarn>NU1605</NoWarn>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HttpStatusMonitor\HttpStatusMonitor.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
 
 </Project>
