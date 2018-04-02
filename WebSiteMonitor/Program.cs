@@ -1,4 +1,5 @@
 ﻿using HttpStatusMonitor;
+using ServiceStatusMonitor;
 using MonitorServices;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,19 @@ namespace WebSiteMonitor
                     n.TargetUri = new Uri("http://www.baidu.com");
                     n.Header.Add(new KeyValuePair<string, string>("key", "value"));
                     n.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.SourceName + "v1.0");
+                });
+            });
+
+            services.UseServiceStatusMonitor(opt =>
+            {
+                opt.ServiceNames.Add("aspnet_state");
+                opt.UseEmailNotifyChannel(n =>
+                {
+                    n.Smtp = "mail.taichuan.com";
+                    n.SenderAccout = "iot@taichaun.com";
+                    n.SenderPassword = "tc123457";
+                    n.TargetEmails.Add("42309073@qq.com");
+                    n.Title = ctx => "v1.0" + ctx.SourceName;
                 });
             });
 

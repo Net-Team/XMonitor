@@ -12,6 +12,7 @@
     <ProjectReference Include="..\HttpStatusMonitor\HttpStatusMonitor.csproj" />
     <ProjectReference Include="..\MonitorServices\MonitorServices.csproj" />
     <ProjectReference Include="..\NotifyChannels\NotifyChannels.csproj" />
+    <ProjectReference Include="..\ServiceStatusMonitor\ServiceStatusMonitor.csproj" />
   </ItemGroup>
 
 </Project>

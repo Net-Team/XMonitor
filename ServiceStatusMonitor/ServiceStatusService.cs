@@ -15,6 +15,7 @@ namespace ServiceStatusMonitor
         /// 选项
         /// </summary>
         private readonly ServiceOptions options;
+
         /// <summary>
         /// 获取或设置是否在运行
         /// </summary>
@@ -35,19 +36,21 @@ namespace ServiceStatusMonitor
         }
 
 
-        public void Start()
+        public async void Start()
         {
-            throw new NotImplementedException();
+            this.IsRunning = true;
+            await this.RunAsync();
         }
 
         /// <summary>
         /// 获取服务运行状态
         /// </summary>
-        /// <param name="serviceName"></param>
+        /// <param name="serviceName">服务名称</param>
         /// <returns></returns>
         private bool CheckServiceStatus(string serviceName)
         {
             this._service = new ServiceController(serviceName);
+            this._service.Refresh();
             return this._service.Status != ServiceControllerStatus.Stopped;
         }
 
@@ -61,15 +64,57 @@ namespace ServiceStatusMonitor
             {
                 foreach (var item in this.options.ServiceNames.Distinct())
                 {
-                    this.CheckServiceStatus(item);
+                    try
+                    {
+                        if (this.CheckServiceStatus(item) == false)
+                        {
+                            this._service.Start();
+                            await this.NotifyAsync(item, new Exception("服务被停止,已恢复启动."));
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        await this.NotifyAsync(item, ex);
+                        this.options.Logger?.Error(ex);
+                    }
                 }
                 await Task.Delay(this.options.Interval);
             }
         }
 
+        /// <summary>
+        /// 停止监控
+        /// </summary>
         public void Stop()
         {
-            throw new NotImplementedException();
+            this.IsRunning = false;
+        }
+
+        /// <summary>
+        /// 通知异常
+        /// </summary>
+        /// <param name="serverName">产生异常的服务</param>
+        /// <param name="exception">异常</param>
+        /// <returns></returns>
+        private async Task NotifyAsync(string serverName, Exception exception)
+        {
+            var context = new NotifyContext
+            {
+                Exception = exception,
+                SourceName = serverName.ToString()
+            };
+
+            foreach (var item in this.options.NotifyChannels)
+            {
+                try
+                {
+                    await item?.NotifyAsync(context);
+                }
+                catch (Exception ex)
+                {
+                    this.options.Logger?.Error(ex);
+                }
+            }
         }
     }
 }
