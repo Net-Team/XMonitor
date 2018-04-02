@@ -41,12 +41,12 @@ namespace HttpStatusMonitor
         /// <summary>
         /// 获取目标url列表
         /// </summary>
-        public List<Uri> TargetUrls => new List<Uri>();
+        public List<Uri> TargetUrls { get; }= new List<Uri>();
 
         /// <summary>
         /// 获取通知通道列表
         /// </summary>
-        public List<INotifyChannel> NotifyChannels => new List<INotifyChannel>();
+        public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();
 
 
         /// <summary>

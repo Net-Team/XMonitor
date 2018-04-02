@@ -12,15 +12,19 @@ namespace WebSiteMonitor
 
             services.UseHttpStatusMonitor(opt =>
             {
+                opt.TargetUrls.Add(new Uri("http://iot.taichuan.net/404"));
                 opt.UseEmailNotifyChannel(e =>
                 {
-                    e.TargetEmails.Add("qq@qq.com");
-                    
+                    e.Smtp = "mail.taichuan.com";
+                    e.SenderAccout = "iot@taichaun.com";
+                    e.SenderPassword = "tc123457";
+                    e.TargetEmails.Add("tangfeng@taichuan.com");
                 });
             });
 
             services.Start();
             Console.WriteLine("Hello WebSiteMonitor!");
+            Console.ReadLine();
         }
     }
 }

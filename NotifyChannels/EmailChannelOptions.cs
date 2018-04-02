@@ -39,6 +39,6 @@ namespace NotifyChannels
         /// <summary>
         /// 接收者邮箱地址
         /// </summary>
-        public List<string> TargetEmails => new List<string>();
+        public List<string> TargetEmails { get; } = new List<string>();
     }
 }
