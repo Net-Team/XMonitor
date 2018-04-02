@@ -25,6 +25,12 @@ namespace HttpStatusMonitor
         public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
+        /// 请求超时时间
+        /// 超时将处理为异常
+        /// </summary>
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1d);
+
+        /// <summary>
         /// 获取或设置响应内容过滤器
         /// </summary>
         public Func<string, bool> HttpContentFilter { get; set; }
@@ -40,7 +46,7 @@ namespace HttpStatusMonitor
         public Options()
         {
             this.HttpContentFilter = content => true;
-            this.HttpStatusFilter = this.IsSuccessStatusCode;         
+            this.HttpStatusFilter = this.IsSuccessStatusCode;
         }
 
         /// <summary>
