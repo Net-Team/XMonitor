@@ -15,11 +15,6 @@ namespace HttpStatusMonitor
     public class Options
     {
         /// <summary>
-        /// 用于保存通知通道
-        /// </summary>
-        private readonly List<INotifyChannel> channels = new List<INotifyChannel>();
-
-        /// <summary>
         /// 获取或设置检测的时间间隔
         /// </summary>
         public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
@@ -31,6 +26,11 @@ namespace HttpStatusMonitor
         public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
+        /// 重试次数，当超过指定数次才定义为错误
+        /// </summary>
+        public int Retry { get; set; } = 3;
+
+        /// <summary>
         /// 获取或设置响应内容过滤器
         /// </summary>
         public Func<string, bool> HttpContentFilter { get; set; }
@@ -39,6 +39,17 @@ namespace HttpStatusMonitor
         /// 获取或设置响应状态码过滤器
         /// </summary>
         public Func<HttpStatusCode, bool> HttpStatusFilter { get; set; }
+
+        /// <summary>
+        /// 获取目标url列表
+        /// </summary>
+        public List<Uri> TargetUrls => new List<Uri>();
+
+        /// <summary>
+        /// 获取通知通道列表
+        /// </summary>
+        public List<INotifyChannel> NotifyChannels => new List<INotifyChannel>();
+
 
         /// <summary>
         /// http状态码监控的配置项
@@ -70,21 +81,7 @@ namespace HttpStatusMonitor
             options?.Invoke(opt);
 
             var channel = new EmailChannel(opt);
-            this.AddNotifyChannel(channel);
-        }
-
-        /// <summary>
-        /// 添加通知通道
-        /// </summary>
-        /// <param name="channel">知通道</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public void AddNotifyChannel(INotifyChannel channel)
-        {
-            if (channel == null)
-            {
-                throw new ArgumentNullException(nameof(channel));
-            }
-            this.channels.Add(channel);
+            this.NotifyChannels.Add(channel);
         }
     }
 }

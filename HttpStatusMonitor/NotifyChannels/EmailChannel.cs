@@ -25,13 +25,12 @@ namespace HttpStatusMonitor.NotifyChannels
         /// <summary>
         /// 通知异常内容
         /// </summary>
-        /// <param name="Title">标题</param>
         /// <param name="ex">异常</param>
         /// <returns></returns>
 
-        public async Task NotifyAsync(string Title, Exception ex)
+        public async Task NotifyAsync(Exception ex)
         {
-            await this.opt.FromStmp.SendAsync(this.opt.TargetEmails, Title, ex.Message);
+            await this.opt.FromStmp.SendAsync(this.opt.TargetEmails, "title", ex.Message);
         }
     }
 }
