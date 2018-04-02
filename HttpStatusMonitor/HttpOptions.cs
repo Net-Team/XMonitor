@@ -10,8 +10,13 @@ namespace HttpStatusMonitor
     /// <summary>
     /// 表示http状态码监控的配置项
     /// </summary>
-    public class HttpOptions
+    public class HttpOptions : IOptions<Uri>
     {
+        /// <summary>
+        /// 获取或设置日志工具
+        /// </summary>
+        public ILogger Logger { get; set; }
+
         /// <summary>
         /// 获取或设置检测的时间间隔
         /// 默认1分钟
@@ -44,19 +49,15 @@ namespace HttpStatusMonitor
         public Func<HttpStatusCode, bool> HttpStatusFilter { get; set; }
 
         /// <summary>
-        /// 获取目标url列表
+        /// 获取监控的网址集合
         /// </summary>
-        public List<Uri> TargetUrls { get; } = new List<Uri>();
+        public MonitorCollection<Uri> Monitors { get; } = new MonitorCollection<Uri>();
 
         /// <summary>
         /// 获取通知通道列表
         /// </summary>
         public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();
 
-        /// <summary>
-        /// 获取或设置日志工具
-        /// </summary>
-        public ILogger Logger { get; set; }
 
         /// <summary>
         /// http状态码监控的配置项

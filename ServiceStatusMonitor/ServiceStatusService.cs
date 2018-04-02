@@ -62,11 +62,11 @@ namespace ServiceStatusMonitor
         {
             while (this.IsRunning == true)
             {
-                foreach (var item in this.options.ServiceNames.Distinct())
+                foreach (var item in this.options.Monitors)
                 {
                     try
                     {
-                        if (this.CheckServiceStatus(item) == false)
+                        if (this.CheckServiceStatus(item.Value) == false)
                         {
                             this.options.Logger?.Debug("服务被停止,正在恢复.");
                             this._service.Start();
@@ -94,15 +94,15 @@ namespace ServiceStatusMonitor
         /// <summary>
         /// 通知异常
         /// </summary>
-        /// <param name="serverName">产生异常的服务</param>
+        /// <param name="monitor">产生异常的服务</param>
         /// <param name="exception">异常</param>
         /// <returns></returns>
-        private async Task NotifyAsync(string serverName, Exception exception)
+        private async Task NotifyAsync(IMonitor<string> monitor, Exception exception)
         {
             var context = new NotifyContext
             {
+                Monitor = monitor,
                 Exception = exception,
-                SourceName = serverName.ToString()
             };
 
             foreach (var item in this.options.NotifyChannels)

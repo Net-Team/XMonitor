@@ -6,7 +6,7 @@
     <NoWarn>NU1605</NoWarn>
     <ApplicationIcon />
     <StartupObject />
-    <ApplicationManifest>app1.manifest</ApplicationManifest>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <ItemGroup>

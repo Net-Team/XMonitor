@@ -55,15 +55,15 @@ namespace HttpStatusMonitor
         {
             while (this.IsRunning == true)
             {
-                foreach (var uri in this.options.TargetUrls)
+                foreach (var item in this.options.Monitors)
                 {
                     try
                     {
-                        await this.CheckHttpStatusAsync(uri);
+                        await this.CheckHttpStatusAsync(item.Value);
                     }
                     catch (HttpRequestException ex)
                     {
-                        await this.NotifyAsync(uri, ex);
+                        await this.NotifyAsync(item, ex);
                     }
                     catch (Exception ex)
                     {
@@ -95,15 +95,15 @@ namespace HttpStatusMonitor
         /// <summary>
         /// 通知异常
         /// </summary>
-        /// <param name="uri">产生异常的网址</param>
+        /// <param name="monitor">产生异常的对象</param>
         /// <param name="exception">异常</param>
         /// <returns></returns>
-        private async Task NotifyAsync(Uri uri, HttpRequestException exception)
+        private async Task NotifyAsync(IMonitor<Uri> monitor, HttpRequestException exception)
         {
             var context = new NotifyContext
             {
-                Exception = exception,
-                SourceName = uri.ToString()
+                Monitor = monitor,
+                Exception = exception
             };
 
             foreach (var item in this.options.NotifyChannels)

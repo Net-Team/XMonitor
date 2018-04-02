@@ -10,12 +10,12 @@ namespace NotifyChannels
     /// <summary>
     /// Http 消息通知选项
     /// </summary>
-    public class HttpChannelOptions
+    public class HttpChannelOptions 
     {
         /// <summary>
         /// 或取或设置接收者接口地址
         /// </summary>
-        public Uri TargetUri { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// 获取请求头集合
@@ -26,7 +26,7 @@ namespace NotifyChannels
         /// HttpContent参数 
         /// 或取或设置消息标题参数委托
         /// </summary>
-        public Func<NotifyContext, KeyValuePair<string, string>> Title { get; set; } = ctx => new KeyValuePair<string, string>("Title", ctx.SourceName);
+        public Func<NotifyContext, KeyValuePair<string, string>> Title { get; set; } = ctx => new KeyValuePair<string, string>("Title", ctx.Monitor.Alias);
 
         /// <summary>
         /// HttpContent参数 

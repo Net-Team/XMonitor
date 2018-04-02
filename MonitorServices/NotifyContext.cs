@@ -12,10 +12,9 @@ namespace MonitorServices
     public class NotifyContext
     {
         /// <summary>
-        /// 获取或设置消息源
-        /// 比如为站点的Url等
+        /// 获取或设置监控的对象
         /// </summary>
-        public string SourceName { get; set; }
+        public IMonitor Monitor { get; set; }
 
         /// <summary>
         /// 获取或设置异常内容

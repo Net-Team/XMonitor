@@ -48,7 +48,7 @@ namespace NotifyChannels
         /// 邮件参数 
         ///或取或设置 邮件标题参数委托
         /// </summary>
-        public Func<NotifyContext, string> Title { get; set; } = ctx => ctx.SourceName;
+        public Func<NotifyContext, string> Title { get; set; } = ctx => ctx.Monitor.Alias;
 
         /// <summary>
         /// 邮件参数 

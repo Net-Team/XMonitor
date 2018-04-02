@@ -8,8 +8,13 @@ namespace ServiceStatusMonitor
     /// <summary>
     /// 表示服务状态码监控的配置项
     /// </summary>
-    public class ServiceOptions
+    public class ServiceOptions : IOptions<string>
     {
+        /// <summary>
+        /// 获取或设置日志工具
+        /// </summary>
+        public ILogger Logger { get; set; }
+
         /// <summary>
         /// 获取或设置检测的时间间隔
         /// 默认1分钟
@@ -17,20 +22,14 @@ namespace ServiceStatusMonitor
         public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
+        /// 获取监控的服务列表
+        /// </summary>
+        public MonitorCollection<string> Monitors { get; } = new MonitorCollection<string>();
+
+        /// <summary>
         /// 获取通知通道列表
         /// </summary>
         public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();
-
-        /// <summary>
-        /// 获取目标服务列表
-        /// </summary>
-        public List<string> ServiceNames { get; set; } = new List<string>();
-
-        /// <summary>
-        /// 获取或设置日志工具
-        /// </summary>
-        public ILogger Logger { get; set; }
-
 
         /// <summary>
         /// 使用邮件通知 

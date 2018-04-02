@@ -66,7 +66,7 @@ namespace NotifyChannels
             httpContent.Add(this.opt.Message(context));
 
             await this.httpNotifyClient
-                .SendNotifyAsync(this.opt.TargetUri, this.opt.Header, httpContent)
+                .SendNotifyAsync(this.opt.Uri, this.opt.Header, httpContent)
                 .HandleAsDefaultWhenException();
         }
     }
