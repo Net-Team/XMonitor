@@ -68,6 +68,7 @@ namespace ServiceStatusMonitor
                     {
                         if (this.CheckServiceStatus(item) == false)
                         {
+                            this.options.Logger?.Debug("服务被停止,正在恢复.");
                             this._service.Start();
                             await this.NotifyAsync(item, new Exception("服务被停止,已恢复启动."));
                         }
