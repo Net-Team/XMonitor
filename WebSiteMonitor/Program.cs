@@ -15,7 +15,7 @@ namespace WebSiteMonitor
             {
                 opt.TargetUrls.Add(new Uri("http://iot.taichuan.net/404"));
                 opt.UseEmailNotifyChannel(n =>
-                {
+                {   
                     n.Smtp = "mail.taichuan.com";
                     n.SenderAccout = "iot@taichaun.com";
                     n.SenderPassword = "tc123457";
