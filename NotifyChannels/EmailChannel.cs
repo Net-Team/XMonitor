@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonitorServices;
+using System;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -6,12 +7,12 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace HttpStatusMonitor.NotifyChannels
+namespace NotifyChannels
 {
     /// <summary>
     /// 表示邮件通知
     /// </summary>
-    class EmailChannel : INotifyChannel
+    public class EmailChannel : INotifyChannel
     {
         /// <summary>
         /// 选项
@@ -34,7 +35,7 @@ namespace HttpStatusMonitor.NotifyChannels
         /// <returns></returns>
         public async Task NotifyAsync(NotifyContext context)
         {
-            await this.SendAsync(context.TargetUrl.ToString(), context.Exception.ToString());
+            await this.SendAsync(context.SourceName.ToString(), context.Exception.ToString());
         }
 
         /// <summary>
@@ -48,7 +49,7 @@ namespace HttpStatusMonitor.NotifyChannels
             var msg = new MailMessage
             {
                 From = new MailAddress(this.opt.SenderAccout),
-                Subject =  title,
+                Subject = title,
                 SubjectEncoding = Encoding.UTF8,
                 Body = body,
                 BodyEncoding = Encoding.UTF8,

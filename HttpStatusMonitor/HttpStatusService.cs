@@ -98,10 +98,9 @@ namespace HttpStatusMonitor
         private async Task NotifyAsync(Uri uri, Exception ex)
         {
             var context = new NotifyContext
-            {
-                Options = this.options,
+            {                 
                 Exception = ex,
-                TargetUrl = uri
+                SourceName = uri.ToString()
             };
 
             foreach (var item in this.options.NotifyChannels)

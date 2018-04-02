@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HttpStatusMonitor.NotifyChannels
+namespace NotifyChannels
 {
     /// <summary>
     /// 表示邮件通知选项

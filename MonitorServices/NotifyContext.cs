@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HttpStatusMonitor
+namespace MonitorServices
 {
     /// <summary>
     /// 表示通知上下文
@@ -12,18 +12,13 @@ namespace HttpStatusMonitor
     public class NotifyContext
     {
         /// <summary>
-        /// 获取配置选项
+        /// 获取消息源
         /// </summary>
-        public Options Options { get; internal set; }
-
-        /// <summary>
-        /// 获取目标URI
-        /// </summary>
-        public Uri TargetUrl { get; internal set; }
+        public string SourceName { get; set; }
 
         /// <summary>
         /// 获取异常
         /// </summary>
-        public Exception Exception { get; internal set; }
+        public Exception Exception { get; set; }
     }
 }

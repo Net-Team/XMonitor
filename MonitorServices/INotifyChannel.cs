@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HttpStatusMonitor
+namespace MonitorServices
 {
     /// <summary>
     /// 定义异常通知通道
