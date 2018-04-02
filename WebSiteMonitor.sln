@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitorServices", "MonitorS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotifyChannels", "NotifyChannels\NotifyChannels.csproj", "{072CF3EC-81D2-45F4-9EA8-36F2A64BC86D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceStatusMonitor", "ServiceStatusMonitor\ServiceStatusMonitor.csproj", "{1DBBFA52-FE71-4B77-8111-0DCC759F9F19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceStatusMonitor", "ServiceStatusMonitor\ServiceStatusMonitor.csproj", "{1DBBFA52-FE71-4B77-8111-0DCC759F9F19}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{4DA4B0B1-7B15-4F6C-A553-BC82798ABB4F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6B5513A0-108A-4515-A65C-341C23B327BA} = {4DA4B0B1-7B15-4F6C-A553-BC82798ABB4F}
+		{1DBBFA52-FE71-4B77-8111-0DCC759F9F19} = {4DA4B0B1-7B15-4F6C-A553-BC82798ABB4F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE6D953A-9EA8-465E-8126-D8C45F1782EA}

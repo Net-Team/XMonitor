@@ -10,7 +10,7 @@ namespace HttpStatusMonitor
     /// <summary>
     /// 表示http状态码监控的配置项
     /// </summary>
-    public class HttpOptions : IOptions<Uri>
+    public class HttpOptions : IMonitorOptions<Uri>
     {
         /// <summary>
         /// 获取或设置日志工具
@@ -76,32 +76,6 @@ namespace HttpStatusMonitor
         {
             var httpStatus = (int)httpStatusCode;
             return httpStatus >= 200 && httpStatus <= 299;
-        }
-
-        /// <summary>
-        /// 使用邮件通知 
-        /// </summary>
-        /// <param name="options">选项</param>
-        public void UseEmailNotifyChannel(Action<EmailChannelOptions> options)
-        {
-            var opt = new EmailChannelOptions();
-            options?.Invoke(opt);
-
-            var channel = new EmailChannel(opt);
-            this.NotifyChannels.Add(channel);
-        }
-
-        /// <summary>
-        /// 使用Http通知 
-        /// </summary>
-        /// <param name="options">选项</param>
-        public void UseHttpNotifyChannel(Action<HttpChannelOptions> options)
-        {
-            var opt = new HttpChannelOptions();
-            options?.Invoke(opt);
-
-            var channel = new HttpChannel(opt);
-            this.NotifyChannels.Add(channel);
         }
     }
 }
