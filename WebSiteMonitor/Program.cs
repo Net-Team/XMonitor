@@ -1,4 +1,5 @@
 ﻿using HttpStatusMonitor;
+using HttpStatusMonitor.NotifyChannels;
 using MonitorServices;
 using System;
 
@@ -12,7 +13,11 @@ namespace WebSiteMonitor
 
             services.UseHttpStatusMonitor(opt =>
             {
-                opt.UseEmailNotifyChannel(e => e.TargetEmails.Add("qq@qq.com"));
+                opt.UseEmailNotifyChannel(e =>
+                {
+                    e.TargetEmails.Add("qq@qq.com");
+                    
+                });
             });
 
             services.Start();
