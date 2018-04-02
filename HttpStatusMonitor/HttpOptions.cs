@@ -41,7 +41,7 @@ namespace HttpStatusMonitor
         /// <summary>
         /// 获取目标url列表
         /// </summary>
-        public List<Uri> TargetUrls { get; }= new List<Uri>();
+        public List<Uri> TargetUrls { get; } = new List<Uri>();
 
         /// <summary>
         /// 获取通知通道列表
@@ -78,6 +78,19 @@ namespace HttpStatusMonitor
             options?.Invoke(opt);
 
             var channel = new EmailChannel(opt);
+            this.NotifyChannels.Add(channel);
+        }
+
+        /// <summary>
+        /// 使用Http通知 
+        /// </summary>
+        /// <param name="options">选项</param>
+        public void UseHttpNotifyChannel(Action<HttpChannelOptions> options)
+        {
+            var opt = new HttpChannelOptions();
+            options?.Invoke(opt);
+
+            var channel = new HttpChannel(opt);
             this.NotifyChannels.Add(channel);
         }
     }

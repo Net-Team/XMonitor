@@ -35,7 +35,9 @@ namespace NotifyChannels
         /// <returns></returns>
         public async Task NotifyAsync(NotifyContext context)
         {
-            await this.SendAsync(context.SourceName.ToString(), context.Exception.ToString());
+            var title = this.opt.TitleParameter.Invoke(context);
+            var message = this.opt.MessageParameter.Invoke(context);
+            await this.SendAsync(title, message);
         }
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace HttpStatusMonitor
         private async Task NotifyAsync(Uri uri, Exception ex)
         {
             var context = new NotifyContext
-            {                 
+            {
                 Exception = ex,
                 SourceName = uri.ToString()
             };
@@ -121,6 +121,6 @@ namespace HttpStatusMonitor
         public void Dispose()
         {
             this.httpStatusApi.Dispose();
-        }       
+        }
     }
 }

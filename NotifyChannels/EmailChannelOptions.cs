@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MonitorServices;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,5 +41,18 @@ namespace NotifyChannels
         /// 接收者邮箱地址
         /// </summary>
         public List<string> TargetEmails { get; } = new List<string>();
+
+
+        /// <summary>
+        /// 邮件参数 
+        /// 邮件标题参数委托
+        /// </summary>
+        public Func<NotifyContext, string> TitleParameter { get; set; } = ctx => ctx.SourceName;
+
+        /// <summary>
+        /// 邮件参数 
+        /// 邮件内容委托
+        /// </summary>
+        public Func<NotifyContext, string> MessageParameter { get; set; } = ctx => ctx.Exception.Message;
     }
 }
