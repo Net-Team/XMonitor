@@ -1,9 +1,6 @@
 ﻿using MonitorServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using WebApiClient;
 using WebApiClient.Attributes;
@@ -76,36 +73,56 @@ namespace HttpStatusMonitor
         {
             while (this.IsRunning == true)
             {
-                try
+                foreach (var uri in this.options.TargetUrls)
                 {
-                    await this.CheckHttpStatusAsync();
-                }
-                catch (Exception ex)
-                {
-                    foreach (var item in this.options.NotifyChannels)
+                    try
                     {
-                        await item.NotifyAsync(ex);
+                        await this.CheckHttpStatusAsync(uri);
+                    }
+                    catch (Exception ex)
+                    {
+                        await this.NotifyAsync(uri, ex);
                     }
                 }
+
                 await Task.Delay(this.options.Interval);
+            }
+        }
+
+        /// <summary>
+        /// 通知异常
+        /// </summary>
+        /// <param name="uri">产生异常的网址</param>
+        /// <param name="ex">异常</param>
+        /// <returns></returns>
+        private async Task NotifyAsync(Uri uri, Exception ex)
+        {
+            var context = new NotifyContext
+            {
+                Options = this.options,
+                Exception = ex,
+                TargetUrl = uri
+            };
+
+            foreach (var item in this.options.NotifyChannels)
+            {
+                await item?.NotifyAsync(context);
             }
         }
 
         /// <summary>
         /// 检测远程http服务状态
         /// </summary>
+        /// <param name="uri">目标地址</param>
         /// <returns></returns>
-        private async Task CheckHttpStatusAsync()
+        private async Task CheckHttpStatusAsync(Uri uri)
         {
-            foreach (var url in this.options.TargetUrls)
+            if (uri != null)
             {
-                if (url != null)
-                {
-                    await this.httpStatusApi
-                        .CheckAsync(url, this.options.Timeout)
-                        .Retry(this.options.Retry)
-                        .WhenCatch<HttpRequestException>();
-                }
+                await this.httpStatusApi
+                    .CheckAsync(uri, this.options.Timeout)
+                    .Retry(this.options.Retry)
+                    .WhenCatch<HttpRequestException>();
             }
         }
 

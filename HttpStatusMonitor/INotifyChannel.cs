@@ -14,8 +14,8 @@ namespace HttpStatusMonitor
         /// <summary>
         /// 异常通知
         /// </summary>
-        /// <param name="ex">异常</param>
+        /// <param name="context">通知上下文</param>
         /// <returns></returns>
-        Task NotifyAsync(Exception ex);
+        Task NotifyAsync(NotifyContext context);
     }
 }

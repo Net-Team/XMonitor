@@ -28,28 +28,27 @@ namespace HttpStatusMonitor.NotifyChannels
         }
 
         /// <summary>
-        /// 通知异常内容
+        /// 异常通知
         /// </summary>
-        /// <param name="ex">异常</param>
+        /// <param name="context">通知上下文</param>
         /// <returns></returns>
-
-        public async Task NotifyAsync(Exception ex)
+        public async Task NotifyAsync(NotifyContext context)
         {
-            await this.SendAsync(ex.Message);
+            await this.SendAsync(context.TargetUrl.ToString(), context.Exception.ToString());
         }
-
 
         /// <summary>
         /// 发送邮件
         /// </summary>
+        /// <param name="title">标题</param>
         /// <param name="body">内容</param>
         /// <returns></returns>
-        public async Task SendAsync(string body)
+        private async Task SendAsync(string title, string body)
         {
             var msg = new MailMessage
             {
-                From = new MailAddress(this.opt.LoginAccout),
-                Subject = this.opt.Title,
+                From = new MailAddress(this.opt.SenderAccout),
+                Subject =  title,
                 SubjectEncoding = Encoding.UTF8,
                 Body = body,
                 BodyEncoding = Encoding.UTF8,
@@ -71,7 +70,7 @@ namespace HttpStatusMonitor.NotifyChannels
 
             using (var client = new SmtpClient())
             {
-                client.Credentials = new NetworkCredential(this.opt.LoginAccout, this.opt.Password);
+                client.Credentials = new NetworkCredential(this.opt.SenderAccout, this.opt.SenderPassword);
                 client.Port = this.opt.Port;
                 client.Host = this.opt.Smtp;
                 client.EnableSsl = this.opt.SSL;

@@ -12,11 +12,6 @@ namespace HttpStatusMonitor.NotifyChannels
     public class EmailChannelOptions
     {
         /// <summary>
-        /// 目标邮箱地址
-        /// </summary>
-        public List<string> TargetEmails => new List<string>();
-
-        /// <summary>
         /// 邮件服务器
         /// </summary>
         public string Smtp { get; set; }
@@ -32,19 +27,18 @@ namespace HttpStatusMonitor.NotifyChannels
         public bool SSL => false;
 
         /// <summary>
-        /// 登录名
+        /// 发送者的邮箱账号
         /// </summary>
-        public string LoginAccout { get; set; }
+        public string SenderAccout { get; set; }
 
         /// <summary>
-        /// 登录密码
+        /// 发送者的邮箱密码
         /// </summary>
-        public string Password { get; set; }
+        public string SenderPassword { get; set; }
 
         /// <summary>
-        /// 通知标题
+        /// 接收者邮箱地址
         /// </summary>
-        public string Title { get; set; }
-
+        public List<string> TargetEmails => new List<string>();
     }
 }
