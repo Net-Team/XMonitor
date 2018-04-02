@@ -54,7 +54,7 @@ namespace MonitorServices
 
             foreach (var item in this)
             {
-                item?.Start();
+                item.Start();
             }
         }
 
@@ -71,7 +71,7 @@ namespace MonitorServices
 
             foreach (var item in this)
             {
-                item?.Stop();
+                item.Stop();
             }
         }
 

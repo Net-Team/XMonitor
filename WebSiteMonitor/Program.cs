@@ -14,19 +14,19 @@ namespace WebSiteMonitor
             services.UseHttpStatusMonitor(opt =>
             {
                 opt.TargetUrls.Add(new Uri("http://iot.taichuan.net/404"));
-                opt.UseEmailNotifyChannel(e =>
+                opt.UseEmailNotifyChannel(n =>
                 {
-                    e.Smtp = "mail.taichuan.com";
-                    e.SenderAccout = "iot@taichaun.com";
-                    e.SenderPassword = "tc123457";
-                    e.TargetEmails.Add("tangfeng@taichuan.com");
-                    e.Title = ctx => "v1.0" + ctx.SourceName;
+                    n.Smtp = "mail.taichuan.com";
+                    n.SenderAccout = "iot@taichaun.com";
+                    n.SenderPassword = "tc123457";
+                    n.TargetEmails.Add("tangfeng@taichuan.com");
+                    n.Title = ctx => "v1.0" + ctx.SourceName;
                 });
-                opt.UseHttpNotifyChannel(e =>
+                opt.UseHttpNotifyChannel(n =>
                 {
-                    e.TargetUri = new Uri("http://www.baidu.com");
-                    e.Header.Add(new KeyValuePair<string, string>("key", "value"));
-                    e.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.SourceName + "v1.0");
+                    n.TargetUri = new Uri("http://www.baidu.com");
+                    n.Header.Add(new KeyValuePair<string, string>("key", "value"));
+                    n.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.SourceName + "v1.0");
                 });
             });
 
