@@ -28,9 +28,11 @@ namespace HttpStatusMonitor.NotifyChannels
         /// <summary>
         /// 通知异常内容
         /// </summary>
+        /// <param name="Title">标题</param>
         /// <param name="ex">异常</param>
         /// <returns></returns>
-        public Task NotifyAsync(Exception ex)
+
+        public Task NotifyAsync(string Title, Exception ex)
         {
             throw new NotImplementedException();
         }

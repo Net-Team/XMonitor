@@ -16,6 +16,6 @@ namespace HttpStatusMonitor
         /// </summary>
         /// <param name="ex">异常</param>
         /// <returns></returns>
-        Task NotifyAsync(Exception ex);
+        Task NotifyAsync(string Title, Exception ex);
     }
 }

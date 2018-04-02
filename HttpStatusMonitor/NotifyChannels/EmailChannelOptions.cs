@@ -15,5 +15,10 @@ namespace HttpStatusMonitor.NotifyChannels
         /// 目标邮箱地址
         /// </summary>
         public List<string> TargetEmails => new List<string>();
+
+        /// <summary>
+        ///  发送者配置
+        /// </summary>
+        public EmailStmpConfig FromStmp { get; set; }
     }
 }
