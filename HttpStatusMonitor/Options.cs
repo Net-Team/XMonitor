@@ -56,7 +56,6 @@ namespace HttpStatusMonitor
         /// </summary>
         public Options()
         {
-            this.HttpContentFilter = content => true;
             this.HttpStatusFilter = this.IsSuccessStatusCode;
         }
 
