@@ -10,13 +10,12 @@ namespace WebSiteMonitor
         {
             var services = new ServiceCollection();
 
-            services.AddHttpStatusMonitor(opt =>
+            services.UseHttpStatusMonitor(opt =>
             {
                 opt.UseEmailNotifyChannel(e => e.TargetEmails.Add("qq@qq.com"));
             });
 
             services.Start();
-
             Console.WriteLine("Hello WebSiteMonitor!");
         }
     }

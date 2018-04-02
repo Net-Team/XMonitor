@@ -15,21 +15,44 @@ namespace HttpStatusMonitor
     public class Options
     {
         /// <summary>
-        /// 通知通道
+        /// 用于保存通知通道
         /// </summary>
-        private readonly List<INotifyChannel> notifyChannels = new List<INotifyChannel>();
-
-
-        /// <summary>
-        /// 获取正确的状态集合
-        /// </summary>
-        public IEnumerable<HttpStatusCode> SuccessStatusCodes => new List<HttpStatusCode>();
-
+        private readonly List<INotifyChannel> channels = new List<INotifyChannel>();
 
         /// <summary>
         /// 获取或设置检测的时间间隔
         /// </summary>
         public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
+
+        /// <summary>
+        /// 获取或设置响应内容过滤器
+        /// </summary>
+        public Func<string, bool> HttpContentFilter { get; set; }
+
+        /// <summary>
+        /// 获取或设置响应状态码过滤器
+        /// </summary>
+        public Func<HttpStatusCode, bool> HttpStatusFilter { get; set; }
+
+        /// <summary>
+        /// http状态码监控的配置项
+        /// </summary>
+        public Options()
+        {
+            this.HttpContentFilter = content => true;
+            this.HttpStatusFilter = this.IsSuccessStatusCode;         
+        }
+
+        /// <summary>
+        /// 是否为正确的状态码
+        /// </summary>
+        /// <param name="httpStatusCode"></param>
+        /// <returns></returns>
+        private bool IsSuccessStatusCode(HttpStatusCode httpStatusCode)
+        {
+            var httpStatus = (int)httpStatusCode;
+            return httpStatus >= 200 && httpStatus <= 299;
+        }
 
         /// <summary>
         /// 使用邮件通知 
@@ -41,7 +64,7 @@ namespace HttpStatusMonitor
             options?.Invoke(opt);
 
             var channel = new EmailChannel(opt);
-            this.notifyChannels.Add(channel);
+            this.AddNotifyChannel(channel);
         }
 
         /// <summary>
@@ -55,7 +78,7 @@ namespace HttpStatusMonitor
             {
                 throw new ArgumentNullException(nameof(channel));
             }
-            this.notifyChannels.Add(channel);
+            this.channels.Add(channel);
         }
     }
 }
