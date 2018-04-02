@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 namespace MonitorServices
 {
     /// <summary>
-    /// 表示通知上下文
+    /// 表示日志
     /// </summary>
-    public class NotifyContext
+    public interface ILogger
     {
         /// <summary>
-        /// 获取或设置消息源
-        /// 比如为站点的Url等
+        /// 异常日志
         /// </summary>
-        public string SourceName { get; set; }
+        /// <param name="ex">异常</param>
+        void Error(Exception ex);
 
         /// <summary>
-        /// 获取或设置异常内容
+        /// 调试日志
         /// </summary>
-        public Exception Exception { get; set; }
+        /// <param name="message">消息</param>
+        void Debug(string message);
     }
 }

@@ -11,7 +11,7 @@ using WebApiClient.Attributes;
 namespace NotifyChannels
 {
     /// <summary>
-    /// 异常通知
+    /// 表示Http异常通知通道
     /// </summary>
     public class HttpChannel : INotifyChannel
     {
@@ -31,7 +31,7 @@ namespace NotifyChannels
             ITask<HttpResponseMessage> SendNotifyAsync(
                 [Url] Uri url,
                 [Headers] IEnumerable<KeyValuePair<string, string>> header,
-                [FormContent] List<KeyValuePair<string, string>> content);
+                [FormContent] IEnumerable<KeyValuePair<string, string>> content);
         }
 
 
@@ -46,7 +46,7 @@ namespace NotifyChannels
         private readonly IHttpNotifyClient httpNotifyClient = HttpApiClient.Create<IHttpNotifyClient>();
 
         /// <summary>
-        /// Http 异常通知
+        /// Http异常通知通道
         /// </summary>
         /// <param name="opt">选项</param>
         public HttpChannel(HttpChannelOptions opt)
@@ -61,12 +61,12 @@ namespace NotifyChannels
         /// <returns></returns>
         public async Task NotifyAsync(NotifyContext context)
         {
-            var parameters = new List<KeyValuePair<string, string>>();
-            parameters.Add(this.opt.TitleParameter(context));
-            parameters.Add(this.opt.MessageParameter(context));
+            var httpContent = new List<KeyValuePair<string, string>>();
+            httpContent.Add(this.opt.Title(context));
+            httpContent.Add(this.opt.Message(context));
 
             await this.httpNotifyClient
-                .SendNotifyAsync(this.opt.TargetUri, this.opt.Header, parameters)
+                .SendNotifyAsync(this.opt.TargetUri, this.opt.Header, httpContent)
                 .HandleAsDefaultWhenException();
         }
     }

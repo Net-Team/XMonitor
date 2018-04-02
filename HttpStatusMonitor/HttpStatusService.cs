@@ -61,9 +61,13 @@ namespace HttpStatusMonitor
                     {
                         await this.CheckHttpStatusAsync(uri);
                     }
-                    catch (Exception ex)
+                    catch (HttpRequestException ex)
                     {
                         await this.NotifyAsync(uri, ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        this.options.Logger?.Error(ex);
                     }
                 }
 
@@ -71,25 +75,6 @@ namespace HttpStatusMonitor
             }
         }
 
-        /// <summary>
-        /// 通知异常
-        /// </summary>
-        /// <param name="uri">产生异常的网址</param>
-        /// <param name="ex">异常</param>
-        /// <returns></returns>
-        private async Task NotifyAsync(Uri uri, Exception ex)
-        {
-            var context = new NotifyContext
-            {
-                Exception = ex,
-                SourceName = uri.ToString()
-            };
-
-            foreach (var item in this.options.NotifyChannels)
-            {
-                await item?.NotifyAsync(context);
-            }
-        }
 
         /// <summary>
         /// 检测远程http服务状态
@@ -104,6 +89,33 @@ namespace HttpStatusMonitor
                     .CheckAsync(uri, this.options.Timeout)
                     .Retry(this.options.Retry)
                     .WhenCatch<HttpRequestException>();
+            }
+        }
+
+        /// <summary>
+        /// 通知异常
+        /// </summary>
+        /// <param name="uri">产生异常的网址</param>
+        /// <param name="exception">异常</param>
+        /// <returns></returns>
+        private async Task NotifyAsync(Uri uri, HttpRequestException exception)
+        {
+            var context = new NotifyContext
+            {
+                Exception = exception,
+                SourceName = uri.ToString()
+            };
+
+            foreach (var item in this.options.NotifyChannels)
+            {
+                try
+                {
+                    await item?.NotifyAsync(context);
+                }
+                catch (Exception ex)
+                {
+                    this.options.Logger?.Error(ex);
+                }
             }
         }
 

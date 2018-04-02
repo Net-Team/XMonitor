@@ -18,41 +18,42 @@ namespace NotifyChannels
         public string Smtp { get; set; }
 
         /// <summary>
-        /// 端口
+        /// 或取或设置服务器使用的mail端口
+        /// 默认为25
         /// </summary>
         public int Port => 25;
 
         /// <summary>
-        /// 是否SSL
+        /// 或取或设置是否使用SSL
+        /// 默认为false
         /// </summary>
         public bool SSL => false;
 
         /// <summary>
-        /// 发送者的邮箱账号
+        /// 或取或设置发送者的邮箱账号
         /// </summary>
         public string SenderAccout { get; set; }
 
         /// <summary>
-        /// 发送者的邮箱密码
+        /// 或取或设置发送者的邮箱密码
         /// </summary>
         public string SenderPassword { get; set; }
 
         /// <summary>
-        /// 接收者邮箱地址
+        /// 或取接收者邮箱地址列表
         /// </summary>
         public List<string> TargetEmails { get; } = new List<string>();
 
+        /// <summary>
+        /// 邮件参数 
+        ///或取或设置 邮件标题参数委托
+        /// </summary>
+        public Func<NotifyContext, string> Title { get; set; } = ctx => ctx.SourceName;
 
         /// <summary>
         /// 邮件参数 
-        /// 邮件标题参数委托
+        /// 或取或设置邮件内容委托
         /// </summary>
-        public Func<NotifyContext, string> TitleParameter { get; set; } = ctx => ctx.SourceName;
-
-        /// <summary>
-        /// 邮件参数 
-        /// 邮件内容委托
-        /// </summary>
-        public Func<NotifyContext, string> MessageParameter { get; set; } = ctx => ctx.Exception.Message;
+        public Func<NotifyContext, string> Message { get; set; } = ctx => ctx.Exception.Message;
     }
 }
