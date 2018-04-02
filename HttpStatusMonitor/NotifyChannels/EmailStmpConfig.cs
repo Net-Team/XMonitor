@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HttpStatusMonitor.NotifyChannels
@@ -52,6 +55,48 @@ namespace HttpStatusMonitor.NotifyChannels
             this.Smtp = smtp;
             this.LoginAccout = loginAccout;
             this.Password = password;
+        }
+
+        /// <summary>
+        /// 发送邮件
+        /// </summary>
+        /// <param name="to">接收者邮箱</param>
+        /// <param name="title">标题</param>
+        /// <param name="htmlBody">内容</param>
+        /// <returns></returns>
+        public async Task SendAsync(IEnumerable<string> to, string title, string htmlBody)
+        {
+            var msg = new MailMessage
+            {
+                From = new MailAddress(this.LoginAccout),
+                Subject = title,
+                SubjectEncoding = Encoding.UTF8,
+                Body = htmlBody,
+                BodyEncoding = Encoding.UTF8,
+                IsBodyHtml = true,
+            };
+
+            foreach (var item in to.Distinct())
+            {
+                if (string.IsNullOrEmpty(item) == false && Regex.IsMatch(item, @"^\w+(\.\w*)*@\w+\.\w+$"))
+                {
+                    msg.To.Add(item);
+                }
+            }
+
+            if (msg.To.Count == 0)
+            {
+                return;
+            }
+
+            using (var client = new SmtpClient())
+            {
+                client.Credentials = new NetworkCredential(this.LoginAccout, this.Password);
+                client.Port = this.Port;
+                client.Host = this.Smtp;
+                client.EnableSsl = this.SSL;
+                await client.SendMailAsync(msg);
+            }
         }
     }
 }

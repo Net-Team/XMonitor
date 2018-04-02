@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HttpStatusMonitor.NotifyChannels
@@ -32,9 +29,9 @@ namespace HttpStatusMonitor.NotifyChannels
         /// <param name="ex">异常</param>
         /// <returns></returns>
 
-        public Task NotifyAsync(string Title, Exception ex)
+        public async Task NotifyAsync(string Title, Exception ex)
         {
-            throw new NotImplementedException();
+            await this.opt.FromStmp.SendAsync(this.opt.TargetEmails, Title, ex.Message);
         }
     }
 }
