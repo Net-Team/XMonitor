@@ -18,7 +18,7 @@ namespace XMonitor.Process
         /// 选项
         /// </summary>
         private readonly ProcessOptions options;
-        
+
         /// <summary>
         /// 获取或设置是否在运行
         /// </summary>
@@ -49,21 +49,22 @@ namespace XMonitor.Process
         /// <returns></returns>
         private async Task RunAsync()
         {
-            while (this.IsRunning == true)
+            foreach (var monitor in this.options.Monitors)
             {
-                foreach (var monitor in this.options.Monitors)
+                try
                 {
-                    try
+                    var process = System.Diagnostics.Process.GetProcessesByName(monitor.GetProcessName());
+                    if (process == null || process.Length == 0)
                     {                        
                     }
-                    catch (Exception ex)
-                    {
-                        await this.NotifyAsync(monitor, ex);
-                        this.options.Logger?.Error(ex);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    await this.NotifyAsync(monitor, ex);
+                    this.options.Logger?.Error(ex);
                 }
             }
-        }        
+        }
 
         /// <summary>
         /// 通知异常

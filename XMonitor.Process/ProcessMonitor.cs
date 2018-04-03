@@ -1,4 +1,6 @@
-﻿using XMonitor.Core;
+﻿using System.Diagnostics;
+using System.IO;
+using XMonitor.Core;
 
 namespace XMonitor.Process
 {
@@ -36,6 +38,29 @@ namespace XMonitor.Process
             {
                 return this.FilePath;
             }
+        }
+
+        /// <summary>
+        /// 返回进程的名称
+        /// </summary>
+        /// <returns></returns>
+        public string GetProcessName()
+        {
+            return Path.GetFileNameWithoutExtension(this.FilePath);
+        }
+
+        /// <summary>
+        /// 转换为ProcessStartInfo对象
+        /// </summary>
+        /// <returns></returns>
+        public ProcessStartInfo ToProcessStartInfo()
+        {
+            return new ProcessStartInfo
+            {
+                Arguments = this.Arguments,
+                FileName = this.FilePath,
+                WorkingDirectory = this.WorkingDirectory
+            };
         }
     }
 }
