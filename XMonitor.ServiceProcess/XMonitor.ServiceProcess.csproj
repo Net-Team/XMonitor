@@ -2,11 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netcoreapp2.0;netstandard2.0</TargetFrameworks>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\XMonitor.ServiceProcess.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\ServiceStatusMonitor.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MonitorServices\XMonitor.Core.csproj" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="System.ServiceProcess.ServiceController">
@@ -22,5 +19,9 @@
     <PackageReference Include="System.ServiceProcess.ServiceController">
       <Version>4.4.1</Version>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\XMonitor.Core\XMonitor.Core.csproj" />
   </ItemGroup>
 </Project>
