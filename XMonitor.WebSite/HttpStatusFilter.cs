@@ -17,13 +17,13 @@ namespace XMonitor.WebSite
         /// <summary>
         /// 选项
         /// </summary>
-        private readonly HttpOptions options;
+        private readonly WebSiteOptions options;
 
         /// <summary>
         /// http状态过滤器
         /// </summary>
         /// <param name="options"></param>
-        public HttpStatusFilter(HttpOptions options)
+        public HttpStatusFilter(WebSiteOptions options)
         {
             this.options = options;
         }

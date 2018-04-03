@@ -1,25 +1,29 @@
 ﻿using XMonitor.Core;
 using System;
-using System.Net.Http;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.ServiceProcess;
+using System.Text;
 using System.Threading.Tasks;
-using WebApiClient;
 
-namespace XMonitor.WebSite
+namespace XMonitor.ServiceProcess
 {
     /// <summary>
-    /// 表示http状态检测服务
+    /// 表示服务进程状态检测服务
     /// </summary>
-    class HttpStatusService : IMonitorService, IDisposable
+    class ServiceMonitorService : IMonitorService
     {
         /// <summary>
         /// 选项
         /// </summary>
-        private readonly HttpOptions options;
+        private readonly ServiceOptions options;
 
         /// <summary>
-        /// api客户端
+        /// 服务缓存
         /// </summary>
-        private readonly IHttpStatusApi httpStatusApi;
+        private readonly ConcurrentDictionary<string, ServiceController> services;
 
         /// <summary>
         /// 获取或设置是否在运行
@@ -27,19 +31,17 @@ namespace XMonitor.WebSite
         public bool IsRunning { get; private set; }
 
         /// <summary>
-        /// http状态检测服务
+        /// 服务进程状态检测服务
         /// </summary>
         /// <param name="options">选项</param>
-        public HttpStatusService(HttpOptions options)
+        public ServiceMonitorService(ServiceOptions options)
         {
             this.options = options;
-            var config = new HttpApiConfig();
-            config.GlobalFilters.Add(new HttpStatusFilter(options));
-            this.httpStatusApi = HttpApiClient.Create<IHttpStatusApi>(config);
+            this.services = new ConcurrentDictionary<string, ServiceController>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
-        /// 启动服务
+        /// 启动监控
         /// </summary>
         public async void Start()
         {
@@ -60,51 +62,49 @@ namespace XMonitor.WebSite
                 {
                     try
                     {
-                        await this.CheckHttpStatusAsync(monitor.Value);
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        await this.NotifyAsync(monitor, ex);
+                        var service = this.GetServiceByName(monitor.Value);
+                        if (service.Status == ServiceControllerStatus.Stopped)
+                        {
+                            this.options.Logger?.Debug("服务被停止,正在恢复.");
+                            service.Start();
+                            await this.NotifyAsync(monitor, new Exception("服务被停止,已恢复启动."));
+                        }
                     }
                     catch (Exception ex)
                     {
+                        await this.NotifyAsync(monitor, ex);
                         this.options.Logger?.Error(ex);
                     }
                 }
-
                 await Task.Delay(this.options.Interval);
             }
         }
 
 
         /// <summary>
-        /// 检测远程http服务状态
+        /// 通过服务名称查找服务
         /// </summary>
-        /// <param name="uri">目标地址</param>
+        /// <param name="name">服务名称</param>
         /// <returns></returns>
-        private async Task CheckHttpStatusAsync(Uri uri)
+        private ServiceController GetServiceByName(string name)
         {
-            if (uri != null)
-            {
-                await this.httpStatusApi
-                    .CheckAsync(uri, this.options.Timeout)
-                    .Retry(this.options.Retry)
-                    .WhenCatch<HttpRequestException>();
-            }
+            var service = this.services.GetOrAdd(name, n => new ServiceController(n));
+            service.Refresh();
+            return service;
         }
 
         /// <summary>
         /// 通知异常
         /// </summary>
-        /// <param name="monitor">产生异常的对象</param>
+        /// <param name="monitor">产生异常的服务</param>
         /// <param name="exception">异常</param>
         /// <returns></returns>
-        private async Task NotifyAsync(IMonitor<Uri> monitor, HttpRequestException exception)
+        private async Task NotifyAsync(IMonitor<string> monitor, Exception exception)
         {
             var context = new NotifyContext
             {
                 Monitor = monitor,
-                Exception = exception
+                Exception = exception,
             };
 
             foreach (var channel in this.options.NotifyChannels)
@@ -120,20 +120,13 @@ namespace XMonitor.WebSite
             }
         }
 
+
         /// <summary>
-        /// 停止服务
+        /// 停止监控
         /// </summary>
         public void Stop()
         {
             this.IsRunning = false;
-        }
-
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dispose()
-        {
-            this.httpStatusApi.Dispose();
         }
     }
 }

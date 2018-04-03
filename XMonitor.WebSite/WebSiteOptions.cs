@@ -7,9 +7,9 @@ using System.Net;
 namespace XMonitor.WebSite
 {
     /// <summary>
-    /// 表示http状态码监控的配置项
+    /// 表示站点状态监控的配置项
     /// </summary>
-    public class HttpOptions : IMonitorOptions<Uri>
+    public class WebSiteOptions : IMonitorOptions<Uri>
     {
         /// <summary>
         /// 获取或设置日志工具
@@ -59,9 +59,9 @@ namespace XMonitor.WebSite
 
 
         /// <summary>
-        /// http状态码监控的配置项
+        /// 站点状态监控的配置项
         /// </summary>
-        public HttpOptions()
+        public WebSiteOptions()
         {
             this.HttpStatusFilter = this.IsSuccessStatusCode;
         }

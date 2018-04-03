@@ -14,12 +14,12 @@ namespace XMonitor.Core
         /// <param name="services"></param>
         /// <param name="options">配置选项</param>
         /// <returns></returns>
-        public static ServiceCollection UseHttpStatusMonitor(this ServiceCollection services, Action<HttpOptions> options)
+        public static ServiceCollection UseHttpStatusMonitor(this ServiceCollection services, Action<WebSiteOptions> options)
         {
-            var opt = new HttpOptions();
+            var opt = new WebSiteOptions();
             options?.Invoke(opt);
 
-            var service = new HttpStatusService(opt);
+            var service = new WebSiteMonitorService(opt);
             services.Add(service);
             return services;
         }

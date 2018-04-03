@@ -19,7 +19,7 @@ namespace XMonitor.Core
             var opt = new ServiceOptions();
             options?.Invoke(opt);
 
-            var service = new ServiceStatusService(opt);
+            var service = new ServiceMonitorService(opt);
             services.Add(service);
             return services;
         }
