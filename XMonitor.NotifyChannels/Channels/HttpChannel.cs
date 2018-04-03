@@ -1,12 +1,10 @@
-﻿using XMonitor.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using WebApiClient;
 using WebApiClient.Attributes;
+using XMonitor.Core;
 
 namespace XMonitor.NotifyChannels
 {
@@ -61,13 +59,14 @@ namespace XMonitor.NotifyChannels
         /// <returns></returns>
         public async Task NotifyAsync(NotifyContext context)
         {
-            var httpContent = new List<KeyValuePair<string, string>>();
-            httpContent.Add(this.opt.Title(context));
-            httpContent.Add(this.opt.Message(context));
+            var httpContent = new List<KeyValuePair<string, string>>
+            {
+                this.opt.Title(context),
+                this.opt.Message(context)
+            };
 
             await this.httpNotifyClient
-                .SendNotifyAsync(this.opt.Uri, this.opt.Header, httpContent)
-                .HandleAsDefaultWhenException();
+                .SendNotifyAsync(this.opt.Uri, this.opt.Header, httpContent);
         }
     }
 }
