@@ -53,10 +53,12 @@ namespace XMonitor.Process
             {
                 try
                 {
-                    var process = System.Diagnostics.Process.GetProcessesByName(monitor.GetProcessName());
-                    if (process == null || process.Length == 0)
-                    {                        
+                    var process = monitor.FindProcess();
+                    if (process == null)
+                    {
+                        process = System.Diagnostics.Process.Start(monitor.ToProcessStartInfo());
                     }
+                    process.WaitForExit();
                 }
                 catch (Exception ex)
                 {

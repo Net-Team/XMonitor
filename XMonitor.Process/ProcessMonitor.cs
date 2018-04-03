@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using XMonitor.Core;
+using System.Linq;
 
 namespace XMonitor.Process
 {
@@ -40,14 +41,6 @@ namespace XMonitor.Process
             }
         }
 
-        /// <summary>
-        /// 返回进程的名称
-        /// </summary>
-        /// <returns></returns>
-        public string GetProcessName()
-        {
-            return Path.GetFileNameWithoutExtension(this.FilePath);
-        }
 
         /// <summary>
         /// 转换为ProcessStartInfo对象
@@ -61,6 +54,16 @@ namespace XMonitor.Process
                 FileName = this.FilePath,
                 WorkingDirectory = this.WorkingDirectory
             };
+        }
+
+        /// <summary>
+        /// 查找对应的进程
+        /// </summary>
+        /// <returns></returns>
+        public System.Diagnostics.Process FindProcess()
+        {
+            var processName = Path.GetFileNameWithoutExtension(this.FilePath);
+            return System.Diagnostics.Process.GetProcessesByName(processName)?.FirstOrDefault();
         }
     }
 }
