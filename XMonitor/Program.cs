@@ -10,7 +10,7 @@ namespace XMonitor
         {
             var services = new ServiceCollection();
 
-            services.UseHttpStatusMonitor(opt =>
+            services.UseWebSiteMonitorService(opt =>
             {
                 opt.Monitors.Add("xx网", new Uri("http://iot.taichuan.net/404"));
                 opt.UseEmailNotifyChannel(n =>
@@ -30,7 +30,7 @@ namespace XMonitor
                 opt.Logger = new MonitorLoger();
             });
 
-            services.UseServiceStatusMonitor(opt =>
+            services.UseServiceProcessMonitorService(opt =>
             {
                 opt.Monitors.Add("xx服务", "aspnet_state");
                 opt.UseEmailNotifyChannel(n =>

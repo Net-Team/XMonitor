@@ -1,4 +1,4 @@
-﻿using XMonitor.WebSite;
+﻿using XMonitor.Process;
 using System;
 
 namespace XMonitor.Core
@@ -9,17 +9,17 @@ namespace XMonitor.Core
     public static class ServiceCollectionExtend
     {
         /// <summary>
-        /// 使用http状态码监控服务
+        /// 使用进程监控服务
         /// </summary>
         /// <param name="services"></param>
         /// <param name="options">配置选项</param>
         /// <returns></returns>
-        public static ServiceCollection UseWebSiteMonitorService(this ServiceCollection services, Action<WebSiteOptions> options)
+        public static ServiceCollection UseProcessMonitorService(this ServiceCollection services, Action<ProcessOptions> options)
         {
-            var opt = new WebSiteOptions();
+            var opt = new ProcessOptions();
             options?.Invoke(opt);
 
-            var service = new WebSiteMonitorService(opt);
+            var service = new ProcessMonitorService(opt);
             services.Add(service);
             return services;
         }
