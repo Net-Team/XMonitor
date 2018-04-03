@@ -12,7 +12,7 @@ namespace XMonitor.NotifyChannels
     /// <summary>
     /// 表示邮件通知
     /// </summary>
-    public class EmailChannel : INotifyChannel
+    class EmailChannel : INotifyChannel
     {
         /// <summary>
         /// 选项

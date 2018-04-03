@@ -13,7 +13,7 @@ namespace XMonitor.NotifyChannels
     /// <summary>
     /// 表示Http异常通知通道
     /// </summary>
-    public class HttpChannel : INotifyChannel
+    class HttpChannel : INotifyChannel
     {
         /// <summary>
         /// Http 异常通知接口

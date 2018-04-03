@@ -6,7 +6,7 @@ namespace XMonitor.Core
     /// <summary>
     /// IOptions对象扩展
     /// </summary>
-    public static class OptionsExtend
+    public static class OptionsNotifyChannelExtend
     {
         /// <summary>
         /// 使用邮件通知 
