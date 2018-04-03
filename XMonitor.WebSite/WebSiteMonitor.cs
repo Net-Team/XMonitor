@@ -31,10 +31,6 @@ namespace XMonitor.WebSite
             {
                 return this.Uri;
             }
-            set
-            {
-                this.Uri = (Uri)value;
-            }
         }
     }
 }

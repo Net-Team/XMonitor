@@ -31,10 +31,6 @@ namespace XMonitor.ServiceProcess
             {
                 return this.ServiceName;
             }
-            set
-            {
-                this.ServiceName = (string)value;
-            }
         }
     }
 }

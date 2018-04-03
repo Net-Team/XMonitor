@@ -17,8 +17,8 @@ namespace XMonitor.Core
         string Alias { get; set; }
 
         /// <summary>
-        /// 获取或设置值
+        /// 获取值
         /// </summary>
-        object Value { get; set; }
+        object Value { get; }
     }
 }

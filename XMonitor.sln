@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor.ServiceProcess", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor.WebSite", "XMonitor.WebSite\XMonitor.WebSite.csproj", "{C2DCA98E-CA36-4FCC-BFDF-01015E7BED48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMonitor.Process", "XMonitor.Process\XMonitor.Process.csproj", "{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C2DCA98E-CA36-4FCC-BFDF-01015E7BED48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2DCA98E-CA36-4FCC-BFDF-01015E7BED48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2DCA98E-CA36-4FCC-BFDF-01015E7BED48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
