@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MonitorServices
+namespace XMonitor.Core
 {
     /// <summary>
     /// 表示服务集合

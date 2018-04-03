@@ -1,4 +1,4 @@
-﻿using MonitorServices;
+﻿using XMonitor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using WebApiClient;
 using WebApiClient.Attributes;
 
-namespace NotifyChannels
+namespace XMonitor.NotifyChannels
 {
     /// <summary>
     /// 表示Http异常通知通道

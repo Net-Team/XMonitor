@@ -1,10 +1,10 @@
-﻿using MonitorServices;
+﻿using XMonitor.Core;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using WebApiClient;
 
-namespace HttpStatusMonitor
+namespace XMonitor.WebSite
 {
     /// <summary>
     /// 表示http状态检测服务

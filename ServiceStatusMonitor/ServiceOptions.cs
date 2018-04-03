@@ -1,9 +1,8 @@
-﻿using MonitorServices;
-using NotifyChannels;
+﻿using XMonitor.Core;
 using System;
 using System.Collections.Generic;
 
-namespace ServiceStatusMonitor
+namespace XMonitor.ServiceProcess
 {
     /// <summary>
     /// 表示服务状态码监控的配置项

@@ -1,8 +1,8 @@
-﻿using MonitorServices;
+﻿using XMonitor.Core;
 using System;
 using System.Collections.Generic;
 
-namespace WebSiteMonitor
+namespace XMonitor
 {
     class Program
     {

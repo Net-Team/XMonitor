@@ -1,11 +1,11 @@
-﻿using MonitorServices;
+﻿using XMonitor.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NotifyChannels
+namespace XMonitor.NotifyChannels
 {
     /// <summary>
     /// 表示邮件通知选项

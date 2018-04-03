@@ -1,4 +1,4 @@
-﻿using MonitorServices;
+﻿using XMonitor.Core;
 using System;
 using System.Linq;
 using System.Net;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace NotifyChannels
+namespace XMonitor.NotifyChannels
 {
     /// <summary>
     /// 表示邮件通知

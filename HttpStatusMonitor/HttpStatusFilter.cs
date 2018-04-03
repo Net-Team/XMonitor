@@ -7,7 +7,7 @@ using WebApiClient;
 using WebApiClient.Attributes;
 using WebApiClient.Contexts;
 
-namespace HttpStatusMonitor
+namespace XMonitor.WebSite
 {
     /// <summary>
     /// http状态过滤器

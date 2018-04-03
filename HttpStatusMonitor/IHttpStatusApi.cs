@@ -4,7 +4,7 @@ using WebApiClient;
 using WebApiClient.Attributes;
 using WebApiClient.Parameterables;
 
-namespace HttpStatusMonitor
+namespace XMonitor.WebSite
 {
     /// <summary>
     /// 定义Http状态接口

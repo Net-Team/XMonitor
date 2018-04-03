@@ -1,7 +1,7 @@
-﻿using ServiceStatusMonitor;
+﻿using XMonitor.ServiceProcess;
 using System;
 
-namespace MonitorServices
+namespace XMonitor.Core
 {
     /// <summary>
     ///  ServiceCollection扩展

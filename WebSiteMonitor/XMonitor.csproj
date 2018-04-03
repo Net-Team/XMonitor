@@ -10,10 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HttpStatusMonitor\HttpStatusMonitor.csproj" />
-    <ProjectReference Include="..\MonitorServices\MonitorServices.csproj" />
-    <ProjectReference Include="..\NotifyChannels\NotifyChannels.csproj" />
-    <ProjectReference Include="..\ServiceStatusMonitor\ServiceStatusMonitor.csproj" />
+    <ProjectReference Include="..\HttpStatusMonitor\XMonitor.WebSite.csproj" />
+    <ProjectReference Include="..\MonitorServices\XMonitor.Core.csproj" />
+    <ProjectReference Include="..\NotifyChannels\XMonitor.NotifyChannels.csproj" />
+    <ProjectReference Include="..\ServiceStatusMonitor\XMonitor.ServiceProcess.csproj" />
   </ItemGroup>
 
 </Project>

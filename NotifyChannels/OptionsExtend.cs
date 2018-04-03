@@ -1,7 +1,7 @@
-﻿using NotifyChannels;
+﻿using XMonitor.NotifyChannels;
 using System;
 
-namespace MonitorServices
+namespace XMonitor.Core
 {
     /// <summary>
     /// IOptions对象扩展

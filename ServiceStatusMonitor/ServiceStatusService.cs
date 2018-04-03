@@ -1,4 +1,4 @@
-﻿using MonitorServices;
+﻿using XMonitor.Core;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServiceStatusMonitor
+namespace XMonitor.ServiceProcess
 {
     /// <summary>
     /// 表示服务进程状态检测服务

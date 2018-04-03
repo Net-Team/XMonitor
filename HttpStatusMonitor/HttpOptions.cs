@@ -1,11 +1,10 @@
-﻿using MonitorServices;
-using NotifyChannels;
+﻿using XMonitor.Core;
 using System;
 using System.Collections.Generic;
 using System.Net;
 
 
-namespace HttpStatusMonitor
+namespace XMonitor.WebSite
 {
     /// <summary>
     /// 表示http状态码监控的配置项

@@ -1,7 +1,7 @@
-﻿using HttpStatusMonitor;
+﻿using XMonitor.WebSite;
 using System;
 
-namespace MonitorServices
+namespace XMonitor.Core
 {
     /// <summary>
     ///  ServiceCollection扩展
