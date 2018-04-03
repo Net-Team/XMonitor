@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace XMonitor.ServiceProcess
 {
     /// <summary>
-    /// 表示服务状态码监控的配置项
+    /// 表示服务进程监控的配置项
     /// </summary>
-    public class ServiceOptions : IMonitorOptions<string>
+    public class ServiceProcessOptions : IMonitorServiceOptions
     {
         /// <summary>
         /// 获取或设置日志工具
@@ -23,7 +23,7 @@ namespace XMonitor.ServiceProcess
         /// <summary>
         /// 获取监控的服务列表
         /// </summary>
-        public MonitorCollection<string> Monitors { get; } = new MonitorCollection<string>();
+        public MonitorCollection Monitors { get; } = new MonitorCollection();
 
         /// <summary>
         /// 获取通知通道列表

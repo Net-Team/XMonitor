@@ -9,7 +9,7 @@ namespace XMonitor.WebSite
     /// <summary>
     /// 表示站点状态监控的配置项
     /// </summary>
-    public class WebSiteOptions : IMonitorOptions<Uri>
+    public class WebSiteOptions : IMonitorServiceOptions
     {
         /// <summary>
         /// 获取或设置日志工具
@@ -50,7 +50,7 @@ namespace XMonitor.WebSite
         /// <summary>
         /// 获取监控的网址集合
         /// </summary>
-        public MonitorCollection<Uri> Monitors { get; } = new MonitorCollection<Uri>();
+        public MonitorCollection Monitors { get; } = new MonitorCollection();
 
         /// <summary>
         /// 获取通知通道列表

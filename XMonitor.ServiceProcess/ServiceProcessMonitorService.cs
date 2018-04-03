@@ -13,12 +13,12 @@ namespace XMonitor.ServiceProcess
     /// <summary>
     /// 表示服务进程状态检测服务
     /// </summary>
-    class ServiceMonitorService : IMonitorService
+    class ServiceProcessMonitorService : IMonitorService
     {
         /// <summary>
         /// 选项
         /// </summary>
-        private readonly ServiceOptions options;
+        private readonly ServiceProcessOptions options;
 
         /// <summary>
         /// 服务缓存
@@ -34,7 +34,7 @@ namespace XMonitor.ServiceProcess
         /// 服务进程状态检测服务
         /// </summary>
         /// <param name="options">选项</param>
-        public ServiceMonitorService(ServiceOptions options)
+        public ServiceProcessMonitorService(ServiceProcessOptions options)
         {
             this.options = options;
             this.services = new ConcurrentDictionary<string, ServiceController>(StringComparer.OrdinalIgnoreCase);
@@ -62,7 +62,7 @@ namespace XMonitor.ServiceProcess
                 {
                     try
                     {
-                        var service = this.GetServiceByName(monitor.Value);
+                        var service = this.GetServiceByName(monitor.ServiceName);
                         if (service.Status == ServiceControllerStatus.Stopped)
                         {
                             this.options.Logger?.Debug("服务被停止,正在恢复.");
@@ -99,7 +99,7 @@ namespace XMonitor.ServiceProcess
         /// <param name="monitor">产生异常的服务</param>
         /// <param name="exception">异常</param>
         /// <returns></returns>
-        private async Task NotifyAsync(IMonitor<string> monitor, Exception exception)
+        private async Task NotifyAsync(IMonitor monitor, Exception exception)
         {
             var context = new NotifyContext
             {

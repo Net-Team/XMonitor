@@ -60,7 +60,7 @@ namespace XMonitor.WebSite
                 {
                     try
                     {
-                        await this.CheckHttpStatusAsync(monitor.Value);
+                        await this.CheckHttpStatusAsync(monitor.Uri);
                     }
                     catch (HttpRequestException ex)
                     {
@@ -99,7 +99,7 @@ namespace XMonitor.WebSite
         /// <param name="monitor">产生异常的对象</param>
         /// <param name="exception">异常</param>
         /// <returns></returns>
-        private async Task NotifyAsync(IMonitor<Uri> monitor, HttpRequestException exception)
+        private async Task NotifyAsync(IMonitor monitor, HttpRequestException exception)
         {
             var context = new NotifyContext
             {
