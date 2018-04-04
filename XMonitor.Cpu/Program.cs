@@ -24,7 +24,7 @@ namespace XMonitor.Cpu
                 GetDriveSize();
                 Thread.Sleep(5000);
             }
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         /// <summary>
