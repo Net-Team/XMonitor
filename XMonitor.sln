@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor", "XMonitor\XMonitor.csproj", "{A68FF25D-4BA3-479D-8696-3352C23A45E9}"
 EndProject
@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor.WebSite", "XMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor.Process", "XMonitor.Process\XMonitor.Process.csproj", "{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMonitor.Cpu", "XMonitor.Cpu\XMonitor.Cpu.csproj", "{837C453C-409B-4F62-BCAB-F7A211A81F69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor.Cpu", "XMonitor.Cpu\XMonitor.Cpu.csproj", "{837C453C-409B-4F62-BCAB-F7A211A81F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMonitor.Web", "XMonitor.Web\XMonitor.Web.csproj", "{52FF915C-D5D7-4C1C-BE4A-E5642C408D45}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{837C453C-409B-4F62-BCAB-F7A211A81F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{837C453C-409B-4F62-BCAB-F7A211A81F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{837C453C-409B-4F62-BCAB-F7A211A81F69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52FF915C-D5D7-4C1C-BE4A-E5642C408D45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52FF915C-D5D7-4C1C-BE4A-E5642C408D45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52FF915C-D5D7-4C1C-BE4A-E5642C408D45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52FF915C-D5D7-4C1C-BE4A-E5642C408D45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

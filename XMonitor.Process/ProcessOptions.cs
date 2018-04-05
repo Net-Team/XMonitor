@@ -23,5 +23,11 @@ namespace XMonitor.Process
         /// 获取通知通道列表
         /// </summary>
         public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();
+
+        /// <summary>
+        /// 获取或设置检测的时间间隔
+        /// 默认1分钟
+        /// </summary>
+        public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
     }
 }

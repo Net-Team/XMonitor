@@ -20,5 +20,10 @@ namespace XMonitor.Core
         /// 获取通知通道列表
         /// </summary>
         List<INotifyChannel> NotifyChannels { get; }
+
+        /// <summary>
+        /// 获取或设置检测的时间间隔
+        /// </summary>
+        TimeSpan Interval { get; set; }
     }
 }

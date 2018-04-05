@@ -6,12 +6,12 @@ namespace XMonitor.Core
     /// <summary>
     /// 表示监控的对象集合
     /// </summary>
-    public class MonitorCollection<TMonitor> : IEnumerable<TMonitor> where TMonitor : IMonitor
+    public class MonitorCollection<MonitorChecker> : IEnumerable<MonitorChecker>
     {
         /// <summary>
         /// 监控的对象列表
         /// </summary>
-        private readonly List<TMonitor> monitors = new List<TMonitor>();
+        private readonly List<MonitorChecker> monitors = new List<MonitorChecker>();
 
         /// <summary>
         /// 获取监控对象的数量
@@ -22,7 +22,7 @@ namespace XMonitor.Core
         /// 添加监控对象
         /// </summary>
         /// <param name="monitor">监控对象</param>
-        protected void Add(TMonitor monitor)
+        protected void Add(MonitorChecker monitor)
         {
             this.monitors.Add(monitor);
         }
@@ -31,7 +31,7 @@ namespace XMonitor.Core
         /// 返回监控对象迭代器
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<TMonitor> GetEnumerator()
+        public IEnumerator<MonitorChecker> GetEnumerator()
         {
             return this.monitors.GetEnumerator();
         }
