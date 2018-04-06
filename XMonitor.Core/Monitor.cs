@@ -52,7 +52,7 @@ namespace XMonitor.Core
                 }
                 catch (Exception ex)
                 {
-                    this.OnCheckExceptionAsync(ex);
+                    await this.OnCheckExceptionAsync(ex);
                 }
                 finally
                 {

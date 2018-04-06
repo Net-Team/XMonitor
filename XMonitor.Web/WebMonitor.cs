@@ -74,6 +74,7 @@ namespace XMonitor.Web
         protected override async Task OnCheckExceptionAsync(Exception ex)
         {
             this.opt.Logger.Debug(ex.Message);
+            await this.NotifyAsync(ex);
         }
 
         /// <summary>
