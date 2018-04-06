@@ -9,7 +9,7 @@ using XMonitor.Core;
 namespace XMonitor.Web
 {
     /// <summary>
-    /// 网站服务选项
+    /// 站点监控配置项
     /// </summary>
     public class WebOptions : IMonitorOptions
     {
@@ -20,12 +20,12 @@ namespace XMonitor.Web
 
         /// <summary>
         /// 获取或设置检测的时间间隔
-        /// 默认1分钟
+        /// 默认1分钟检测一次
         /// </summary>
         public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
-        /// 请求超时时间
+        /// 获取或设置请求超时时间
         /// 超时将处理为异常
         /// 默认1分钟
         /// </summary>
@@ -66,7 +66,7 @@ namespace XMonitor.Web
         /// <summary>
         /// 是否为正确的状态码
         /// </summary>
-        /// <param name="httpStatusCode"></param>
+        /// <param name="httpStatusCode">http状态码</param>
         /// <returns></returns>
         private bool IsSuccessStatusCode(HttpStatusCode httpStatusCode)
         {

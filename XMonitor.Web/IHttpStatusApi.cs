@@ -18,8 +18,8 @@ namespace XMonitor.Web
         /// <summary>
         /// 检测指定URL
         /// </summary>
-        /// <param name="url"></param>
-        /// <param name="timeout"></param>
+        /// <param name="url">站点Uri</param>
+        /// <param name="timeout">超时时间</param>
         /// <returns></returns>
         [HttpGet]
         ITask<HttpResponseMessage> CheckAsync([Url] Uri url, Timeout timeout);

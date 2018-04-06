@@ -9,13 +9,12 @@ namespace XMonitor.Web
 {
 
     /// <summary>
-    /// 表示监控的网站集合
+    /// 表示监控的站点集合
     /// </summary>
     public class WebMonitorCollection : MonitorCollection
     {
-
         /// <summary>
-        /// 添加监控网站
+        /// 添加监控站点
         /// </summary>
         /// <param name="alias">别名</param>
         /// <param name="uri">网址</param>

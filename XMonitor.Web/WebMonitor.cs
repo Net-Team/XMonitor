@@ -10,12 +10,12 @@ using XMonitor.Core;
 namespace XMonitor.Web
 {
     /// <summary>
-    /// 网站监控
+    /// 站点监控
     /// </summary>
     public class WebMonitor : Monitor<WebOptions>
     {
         /// <summary>
-        /// 网站监控选项
+        /// 站点监控选项
         /// </summary>
         private readonly WebOptions opt;
 
@@ -30,10 +30,10 @@ namespace XMonitor.Web
         public Uri Uri { get; }
 
         /// <summary>
-        /// 构造监控对象
+        /// 构造站点监控对象
         /// </summary>
-        /// <param name="alias">网站名称</param>
-        /// <param name="uri">网站地址</param>
+        /// <param name="alias">站点名称</param>
+        /// <param name="uri">站点地址</param>
         /// <param name="options">监控选项</param>
         public WebMonitor(string alias, Uri uri, WebOptions options)
             : base(options, alias, uri)
@@ -46,10 +46,10 @@ namespace XMonitor.Web
         }
 
         /// <summary>
-        /// 执行检测
+        /// 执行一次监控
         /// </summary>
         /// <returns></returns>
-        public override async Task OnCheckMonitorAsync()
+        protected override async Task OnCheckMonitorAsync()
         {
             if (this.Uri != null)
             {
@@ -63,7 +63,7 @@ namespace XMonitor.Web
         /// <summary>
         /// 检测异常通知
         /// </summary>
-        /// <param name="ex"></param>
+        /// <param name="ex">异常</param>
         protected override async Task OnCheckExceptionAsync(Exception ex)
         {
             await base.NotifyAsync(ex);

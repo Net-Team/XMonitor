@@ -111,7 +111,7 @@ namespace XMonitor.Core
         /// 执行检测
         /// </summary>
         /// <returns></returns>
-        public abstract Task OnCheckMonitorAsync();
+        protected abstract Task OnCheckMonitorAsync();
 
         /// <summary>
         /// 执行监控
