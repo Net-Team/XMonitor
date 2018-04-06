@@ -55,10 +55,21 @@ namespace XMonitor.Core
         /// <param name="value">对象值</param>
         public Monitor(TOptions options, string alias, object value)
         {
-            if (options == null || string.IsNullOrEmpty(alias) || value == null)
+            if (options == null)
             {
-                throw new Exception("参数异常.");
+                throw new ArgumentNullException(nameof(options));
             }
+
+            if (string.IsNullOrEmpty(alias))
+            {
+                throw new ArgumentNullException(nameof(alias));
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             this.Alias = alias;
             this.Value = value;
             this.Options = options;
