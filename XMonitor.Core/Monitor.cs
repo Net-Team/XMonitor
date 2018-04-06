@@ -113,18 +113,17 @@ namespace XMonitor.Core
                 }
                 catch (Exception channelEx)
                 {
-                    this.opt.Logger?.Error(channelEx);
+                    this.Options.Logger?.Error(channelEx);
                 }
             }
         }
-    }
 
-    /// <summary>
-    /// 释放资源
-    /// </summary>
-    public void Dispose()
-    {
-        this.timer.Dispose();
+        /// <summary>
+        /// 释放资源
+        /// </summary>
+        public void Dispose()
+        {
+            this.timer.Dispose();
+        }
     }
-}
 }

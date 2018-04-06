@@ -68,39 +68,14 @@ namespace XMonitor.Web
         }
 
         /// <summary>
-        /// 检测异常，输出日志
+        /// 检测异常
+        /// 输出日志及通知
         /// </summary>
         /// <param name="ex"></param>
         protected override async Task OnCheckExceptionAsync(Exception ex)
         {
             this.opt.Logger.Debug(ex.Message);
-            await this.NotifyAsync(ex);
-        }
-
-        /// <summary>
-        /// 监控通知异常
-        /// </summary>
-        /// <param name="ex">异常消息</param>
-        /// <returns></returns>
-        protected override async Task NotifyAsync(Exception ex)
-        {
-            var context = new NotifyContext
-            {
-                Monitor = this,
-                Exception = ex
-            };
-
-            foreach (var channel in this.opt.NotifyChannels)
-            {
-                try
-                {
-                    await channel?.NotifyAsync(context);
-                }
-                catch (Exception channelEx)
-                {
-                    this.opt.Logger?.Error(channelEx);
-                }
-            }
+            await base.NotifyAsync(ex);
         }
     }
 
