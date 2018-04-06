@@ -17,7 +17,7 @@ namespace XMonitor.Core
         string Alias { get; }
 
         /// <summary>
-        /// 获取值
+        /// 监控目标标识
         /// </summary>
         object Value { get; }
 
