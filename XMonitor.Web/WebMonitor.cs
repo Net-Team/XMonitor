@@ -15,11 +15,6 @@ namespace XMonitor.Web
     public class WebMonitor : Monitor<WebOptions>
     {
         /// <summary>
-        /// 站点监控选项
-        /// </summary>
-        private readonly WebOptions opt;
-
-        /// <summary>
         /// api客户端
         /// </summary>
         private readonly IHttpStatusApi httpStatusApi;
@@ -35,10 +30,10 @@ namespace XMonitor.Web
         /// <param name="alias">站点名称</param>
         /// <param name="uri">站点地址</param>
         /// <param name="options">监控选项</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public WebMonitor(string alias, Uri uri, WebOptions options)
             : base(options, alias, uri)
         {
-            this.opt = options;
             this.Uri = uri;
             var config = new HttpApiConfig();
             config.GlobalFilters.Add(new HttpStatusFilter(options));
@@ -51,13 +46,10 @@ namespace XMonitor.Web
         /// <returns></returns>
         protected override async Task OnCheckMonitorAsync()
         {
-            if (this.Uri != null)
-            {
-                await this.httpStatusApi
-                    .CheckAsync(this.Uri, this.opt.Timeout)
-                    .Retry(this.opt.Retry)
-                    .WhenCatch<HttpRequestException>();
-            }
+            await this.httpStatusApi
+                .CheckAsync(this.Uri, base.Options.Timeout)
+                .Retry(base.Options.Retry)
+                .WhenCatch<HttpRequestException>();
         }
 
         /// <summary>

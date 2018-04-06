@@ -20,8 +20,9 @@ namespace XMonitor.Core
         /// <param name="alias">站点名称</param>
         /// <param name="uri">站点地址</param>
         /// <param name="options">配置选项</param>
+        /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static MonitorCollection UseWebMonitorService(this MonitorCollection monitors, string alias, Uri uri, Action<WebOptions> options)
+        public static MonitorCollection AddWebMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebOptions> options)
         {
             var opt = new WebOptions();
             options?.Invoke(opt);

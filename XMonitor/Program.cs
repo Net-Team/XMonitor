@@ -10,8 +10,10 @@ namespace XMonitor
         static void Main(string[] args)
         {
 
+
+            TimeSpan ts = new TimeSpan();
             var services = new MonitorCollection();
-            services.UseWebMonitorService("xx网", new Uri("http://iot.taichuan.net/404"), opt =>
+            services.AddWebMonitor("xx网", new Uri("http://iot.taichuan.net/404"), opt =>
             {
                 opt.UseEmailNotifyChannel(n =>
                 {
