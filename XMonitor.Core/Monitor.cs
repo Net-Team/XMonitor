@@ -10,8 +10,13 @@ namespace XMonitor.Core
     /// <summary>
     /// 监控对象
     /// </summary>
-    public abstract class Monitor : IMonitor, IDisposable
+    public abstract class Monitor<TOptions> : IMonitor, IDisposable where TOptions : IMonitorOptions
     {
+        /// <summary>
+        /// 定时器
+        /// </summary>
+        private readonly Timer timer;
+
         /// <summary>
         /// 获取或设置别名
         /// </summary>
@@ -23,27 +28,21 @@ namespace XMonitor.Core
         public object Value { get; }
 
         /// <summary>
-        /// 定时器
+        /// 获取或设置任务选项
         /// </summary>
-        private readonly Timer timer;
-
-        /// <summary>
-        /// 任务选项
-        /// </summary>
-        public IMonitorOptions options { get; private set; }
+        public IMonitorOptions Options { get; private set; }
 
         /// <summary>
         /// 构造监控对象
         /// </summary>
+        /// <param name="options">监控选项</param>
         /// <param name="alias">对象别名</param>
         /// <param name="value">对象值</param>
-        /// <param name="options">监控选项</param>
-        public Monitor(string alias, object value, IMonitorOptions options)
+        public Monitor(TOptions options, string alias, object value)
         {
             this.Alias = alias;
             this.Value = value;
-            this.options = options;
-
+            this.Options = options;
             this.timer = new Timer(async (state) =>
             {
                 try
@@ -56,7 +55,7 @@ namespace XMonitor.Core
                 }
                 finally
                 {
-                    this.timer.Change((Int64)this.options.Interval.TotalMilliseconds, Timeout.Infinite);
+                    this.timer.Change((Int64)this.Options.Interval.TotalMilliseconds, Timeout.Infinite);
                 }
             }, null, Timeout.Infinite, Timeout.Infinite);
         }
@@ -90,8 +89,15 @@ namespace XMonitor.Core
         /// <param name="ex">异常消息</param>
         protected virtual async Task OnCheckExceptionAsync(Exception ex)
         {
-            this.options.Logger.Error(ex);
+            this.Options.Logger.Error(ex);
         }
+
+        /// <summary>
+        /// 消息通知
+        /// </summary>
+        /// <param name="ex">异常消息</param>
+        /// <returns></returns>
+        protected abstract Task NotifyAsync(Exception ex);
 
         /// <summary>
         /// 释放资源
