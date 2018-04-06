@@ -23,7 +23,7 @@ namespace XMonitor.Core
         public string Alias { get; }
 
         /// <summary>
-        /// 获取网址
+        /// 获取监控目标标识
         /// </summary>
         public object Value { get; }
 
@@ -93,18 +93,38 @@ namespace XMonitor.Core
         }
 
         /// <summary>
-        /// 消息通知
+        /// 监控通知异常
         /// </summary>
         /// <param name="ex">异常消息</param>
         /// <returns></returns>
-        protected abstract Task NotifyAsync(Exception ex);
-
-        /// <summary>
-        /// 释放资源
-        /// </summary>
-        public void Dispose()
+        protected virtual async Task NotifyAsync(Exception ex)
         {
-            this.timer.Dispose();
+            var context = new NotifyContext
+            {
+                Monitor = this,
+                Exception = ex
+            };
+
+            foreach (var channel in this.Options.NotifyChannels)
+            {
+                try
+                {
+                    await channel?.NotifyAsync(context);
+                }
+                catch (Exception channelEx)
+                {
+                    this.opt.Logger?.Error(channelEx);
+                }
+            }
         }
     }
+
+    /// <summary>
+    /// 释放资源
+    /// </summary>
+    public void Dispose()
+    {
+        this.timer.Dispose();
+    }
+}
 }

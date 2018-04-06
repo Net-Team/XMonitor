@@ -12,7 +12,7 @@ namespace XMonitor.Web
     /// <summary>
     /// 网站监控
     /// </summary>
-    public class WebMonitor : Monitor
+    public class WebMonitor : Monitor<WebOptions>
     {
         /// <summary>
         /// 获取或设置网址
@@ -43,7 +43,7 @@ namespace XMonitor.Web
         /// <param name="uri">网站地址</param>
         /// <param name="options">监控选项</param>
         public WebMonitor(string alias, Uri uri, WebOptions options)
-            : base(alias, uri, options)
+            : base(options, alias, uri)
         {
             this.opt = options;
             this.Uri = uri;
@@ -78,31 +78,30 @@ namespace XMonitor.Web
         }
 
         /// <summary>
-        /// 通知异常
+        /// 监控通知异常
         /// </summary>
-        /// <param name="exception">异常</param>
+        /// <param name="ex">异常消息</param>
         /// <returns></returns>
-        private async Task NotifyAsync(HttpRequestException exception)
+        protected override async Task NotifyAsync(Exception ex)
         {
             var context = new NotifyContext
             {
                 Monitor = this,
-                Exception = exception
+                Exception = ex
             };
 
-            foreach (var channel in this.options.NotifyChannels)
+            foreach (var channel in this.opt.NotifyChannels)
             {
                 try
                 {
                     await channel?.NotifyAsync(context);
                 }
-                catch (Exception ex)
+                catch (Exception channelEx)
                 {
-                    this.options.Logger?.Error(ex);
+                    this.opt.Logger?.Error(channelEx);
                 }
             }
         }
-
     }
 
 }

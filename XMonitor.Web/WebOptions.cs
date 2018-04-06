@@ -32,8 +32,8 @@ namespace XMonitor.Web
         public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
-        /// 重试次数，当超过指定数次才定义为错误
-        /// 默认3次
+        /// 获取或设置重试次数
+        /// 当超过指定数次才定义为错误 , 默认3次
         /// </summary>
         public int Retry { get; set; } = 3;
 
