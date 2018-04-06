@@ -45,7 +45,7 @@ namespace XMonitor.Core
         /// <summary>
         /// 获取任务选项
         /// </summary>
-        public IMonitorOptions Options { get; }
+        public TOptions Options { get; }
 
         /// <summary>
         /// 构造监控对象
