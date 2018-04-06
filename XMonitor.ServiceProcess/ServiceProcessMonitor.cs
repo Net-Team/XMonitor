@@ -21,19 +21,33 @@ namespace XMonitor.ServiceProcess
         /// <summary>
         /// 构造服务监控对象
         /// </summary>
+        /// <param name="options">服务选项</param>
         /// <param name="alias">服务别名</param>
         /// <param name="serviceName">服务名</param>
-        /// <param name="options">服务选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public ServiceProcessMonitor(string alias, string serviceName, ServiceProcessOptions options)
-            : base(options, alias, serviceName)
+        public ServiceProcessMonitor(ServiceProcessOptions options, string alias, string serviceName)
+            : base(options, alias, IsNullOrEmptyToException(serviceName))
         {
             this.Service = ServiceController.GetServices().Where(item => item.ServiceName.Equals(serviceName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             if (this.Service == null)
             {
                 throw new ArgumentException("服务不存在.", nameof(serviceName));
             }
+        }
+
+        /// <summary>
+        /// 判断服务名是否为空
+        /// </summary>
+        /// <param name="serviceName">服务名</param>
+        /// <returns></returns>
+        private static string IsNullOrEmptyToException(string serviceName)
+        {
+            if (string.IsNullOrEmpty(serviceName))
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+            return serviceName;
         }
 
         /// <summary>

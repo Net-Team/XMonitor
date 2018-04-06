@@ -20,13 +20,13 @@ namespace XMonitor.Process
         /// <summary>
         /// 构建应用程序对象
         /// </summary>
+        /// <param name="options">应用程序监控选项</param>
         /// <param name="alias">程应用程序别名</param>
         /// <param name="processInfo">应用程序信息</param>
-        /// <param name="options">应用程序监控选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public ProcessMonitor(string alias, ProcessInfo processInfo, ProcessOptions options)
-            : base(options, alias, processInfo)
+        public ProcessMonitor(ProcessOptions options, string alias, ProcessInfo processInfo)
+            : base(options, alias, processInfo = processInfo ?? throw new ArgumentNullException(nameof(processInfo)))
         {
             if (string.IsNullOrEmpty(processInfo.FilePath))
             {

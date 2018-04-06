@@ -10,27 +10,53 @@ namespace XMonitor.WebSite
     /// <summary>
     /// 表示站点对象
     /// </summary>
-    public class WebSiteMonitor : IMonitor
+    public class WebSiteMonitor : Monitor<WebSiteOptions>
     {
         /// <summary>
-        /// 获取或设置别名
+        /// api客户端
         /// </summary>
-        public string Alias { get; set; }
+        private readonly IHttpStatusApi httpStatusApi;
 
         /// <summary>
-        /// 获取或设置网址
+        /// 获取网址
         /// </summary>
-        public Uri Uri { get; set; }
+        public Uri Uri { get; }
 
         /// <summary>
-        /// 获取或设置网址
+        /// 构造站点监控对象
         /// </summary>
-        object IMonitor.Value
+        /// <param name="alias">站点名称</param>
+        /// <param name="uri">站点地址</param>
+        /// <param name="options">监控选项</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public WebSiteMonitor(string alias, Uri uri, WebSizeOptions options)
+            : base(options, alias, uri)
         {
-            get
-            {
-                return this.Uri;
-            }
+            this.Uri = uri;
+            var config = new HttpApiConfig();
+            config.GlobalFilters.Add(new HttpStatusFilter(options));
+            this.httpStatusApi = HttpApiClient.Create<IHttpStatusApi>(config);
+        }
+
+        /// <summary>
+        /// 执行一次监控
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnCheckMonitorAsync()
+        {
+            await this.httpStatusApi
+                .CheckAsync(this.Uri, base.Options.Timeout)
+                .Retry(base.Options.Retry)
+                .WhenCatch<HttpRequestException>();
+        }
+
+        /// <summary>
+        /// 检测异常通知
+        /// </summary>
+        /// <param name="ex">异常</param>
+        protected override async Task OnCheckExceptionAsync(Exception ex)
+        {
+            await base.NotifyAsync(ex);
         }
     }
 }

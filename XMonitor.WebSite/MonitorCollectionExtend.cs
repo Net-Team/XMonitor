@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XMonitor.Core;
-using XMonitor.Web;
+﻿using XMonitor.WebSite;
+using System;
 
 namespace XMonitor.Core
 {
@@ -22,12 +17,12 @@ namespace XMonitor.Core
         /// <param name="options">配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static MonitorCollection AddWebMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebOptions> options)
+        public static MonitorCollection AddWebMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebSizeOptions> options)
         {
             var opt = new WebOptions();
             options?.Invoke(opt);
 
-            var service = new WebMonitor(opt, alias, uri);
+            var service = new WebMonitor(alias, uri, opt);
             monitors.Add(service);
             return monitors;
         }

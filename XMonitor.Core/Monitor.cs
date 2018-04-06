@@ -57,19 +57,12 @@ namespace XMonitor.Core
         public Monitor(TOptions options, string alias, object value)
         {
             if (options == null)
-            {
                 throw new ArgumentNullException(nameof(options));
-            }
 
             if (string.IsNullOrEmpty(alias))
-            {
                 throw new ArgumentNullException(nameof(alias));
-            }
 
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            value = value ?? throw new ArgumentNullException(nameof(value));
 
             this.Alias = alias;
             this.Value = value;

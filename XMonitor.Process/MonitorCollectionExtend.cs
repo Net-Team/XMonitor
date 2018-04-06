@@ -23,7 +23,7 @@ namespace XMonitor.Core
             var opt = new ProcessOptions();
             options?.Invoke(opt);
 
-            var service = new ProcessMonitor(alias, processInfo, opt);
+            var service = new ProcessMonitor(opt, alias, processInfo);
             monitor.Add(service);
             return monitor;
         }

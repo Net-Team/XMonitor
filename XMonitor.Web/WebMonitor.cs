@@ -27,12 +27,12 @@ namespace XMonitor.Web
         /// <summary>
         /// 构造站点监控对象
         /// </summary>
+        /// <param name="options">监控选项</param>
         /// <param name="alias">站点名称</param>
         /// <param name="uri">站点地址</param>
-        /// <param name="options">监控选项</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public WebMonitor(string alias, Uri uri, WebOptions options)
-            : base(options, alias, uri)
+        public WebMonitor(WebOptions options, string alias, Uri uri)
+            : base(options, alias, uri = uri ?? throw new ArgumentNullException(nameof(uri)))
         {
             this.Uri = uri;
             var config = new HttpApiConfig();
