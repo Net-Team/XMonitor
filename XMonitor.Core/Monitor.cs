@@ -30,7 +30,7 @@ namespace XMonitor.Core
         /// <summary>
         /// 获取或设置任务选项
         /// </summary>
-        public IMonitorOptions Options { get; private set; }
+        public IMonitorOptions Options { get; }
 
         /// <summary>
         /// 构造监控对象
