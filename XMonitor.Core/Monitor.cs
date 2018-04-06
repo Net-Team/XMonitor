@@ -53,6 +53,7 @@ namespace XMonitor.Core
         /// <param name="options">任务选项</param>
         /// <param name="alias">对象别名</param>
         /// <param name="value">对象值</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public Monitor(TOptions options, string alias, object value)
         {
             if (options == null)
