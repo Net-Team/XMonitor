@@ -35,7 +35,7 @@ namespace XMonitor.Core
         /// <summary>
         /// 构造监控对象
         /// </summary>
-        /// <param name="options">监控选项</param>
+        /// <param name="options">任务选项</param>
         /// <param name="alias">对象别名</param>
         /// <param name="value">对象值</param>
         public Monitor(TOptions options, string alias, object value)
