@@ -18,17 +18,17 @@ namespace XMonitor.Core
         private readonly Timer timer;
 
         /// <summary>
-        /// 获取或设置别名
+        /// 获取别名
         /// </summary>
         public string Alias { get; }
 
         /// <summary>
-        /// 获取或设置网址
+        /// 获取网址
         /// </summary>
         public object Value { get; }
 
         /// <summary>
-        /// 获取或设置任务选项
+        /// 获取任务选项
         /// </summary>
         public IMonitorOptions Options { get; }
 
