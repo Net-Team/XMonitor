@@ -16,6 +16,7 @@ namespace XMonitor.Core
         /// <param name="serviceName">服务名称</param>
         /// <param name="options">配置服务选项</param>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         /// <returns></returns>
         public static MonitorCollection AddServiceProcessMonitor(this MonitorCollection monitor, string alias, string serviceName, Action<ServiceProcessOptions> options)
         {

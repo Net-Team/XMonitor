@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ namespace XMonitor.Process
         {
             this.FilePath = filePath;
             this.Arguments = arguments;
-            this.WorkingDirectory = workingDirectory;
+            this.WorkingDirectory = this.WorkingDirectory ?? Path.GetDirectoryName(filePath);
         }
 
         /// <summary>

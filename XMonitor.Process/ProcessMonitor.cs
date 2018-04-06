@@ -3,11 +3,12 @@ using System.IO;
 using XMonitor.Core;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace XMonitor.Process
 {
     /// <summary>
-    /// 表示进程对象
+    /// 表示应用程序对象
     /// </summary>
     public class ProcessMonitor : Monitor<ProcessOptions>
     {
@@ -16,45 +17,58 @@ namespace XMonitor.Process
         /// </summary>
         public ProcessInfo ProcessInfo { get; }
 
+
         /// <summary>
-        /// 
+        /// 构建应用程序对象
         /// </summary>
         /// <param name="alias">程应用程序别名</param>
-        /// <param name="processInfo"></param>
-        /// <param name="options"></param>
-        /// 
+        /// <param name="processInfo">应用程序信息</param>
+        /// <param name="options">应用程序监控选项</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public ProcessMonitor(string alias, ProcessInfo processInfo, ProcessOptions options)
             : base(options, alias, processInfo)
         {
+            if (string.IsNullOrEmpty(processInfo.FilePath))
+            {
+                throw new ArgumentNullException(nameof(processInfo.FilePath));
+            }
 
+            if (!File.Exists(processInfo.FilePath))
+            {
+                throw new ArgumentException("文件不存在.", nameof(processInfo.FilePath));
+            }
         }
-
 
         /// <summary>
         /// 查找对应的进程
         /// </summary>
         /// <returns></returns>
-        public System.Diagnostics.Process FindProcess()
+        private System.Diagnostics.Process FindProcess()
         {
-            var processName = Path.GetFileNameWithoutExtension(this.FilePath);
+            var processName = Path.GetFileNameWithoutExtension(this.ProcessInfo.FilePath);
             return System.Diagnostics.Process.GetProcessesByName(processName)?.FirstOrDefault();
         }
 
-        protected override Task OnCheckMonitorAsync()
+        /// <summary>
+        /// 执行一次检查
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnCheckMonitorAsync()
         {
             try
             {
-                var process = monitor.FindProcess();
+                var process = this.FindProcess();
                 if (process == null)
                 {
-                    process = System.Diagnostics.Process.Start(monitor.ToProcessStartInfo());
+                    process = System.Diagnostics.Process.Start(this.ProcessInfo.ToProcessStartInfo());
                 }
                 process.WaitForExit();
             }
             catch (Exception ex)
             {
-                await this.NotifyAsync(monitor, ex);
-                this.options.Logger?.Error(ex);
+                await base.NotifyAsync(ex);
+                base.Options.Logger?.Error(ex);
             }
         }
     }
