@@ -29,7 +29,7 @@ namespace XMonitor.ServiceProcess
         public ServiceProcessMonitor(string alias, string serviceName, ServiceProcessOptions options)
             : base(options, alias, serviceName)
         {
-            this.Service = ServiceController.GetServices().Where(item => item.ServiceName == serviceName).FirstOrDefault();
+            this.Service = ServiceController.GetServices().Where(item => item.ServiceName.Equals(serviceName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
             if (this.Service == null)
             {
                 throw new ArgumentException("服务不存在.", nameof(serviceName));
