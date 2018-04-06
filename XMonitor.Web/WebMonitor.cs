@@ -20,7 +20,7 @@ namespace XMonitor.Web
         private readonly IHttpStatusApi httpStatusApi;
 
         /// <summary>
-        /// 获取或设置网址
+        /// 获取网址
         /// </summary>
         public Uri Uri { get; }
 

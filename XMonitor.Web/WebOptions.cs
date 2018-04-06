@@ -54,7 +54,6 @@ namespace XMonitor.Web
         /// </summary>
         public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();
 
-
         /// <summary>
         /// 站点状态监控的配置项
         /// </summary>
