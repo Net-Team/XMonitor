@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using XMonitor.Core;
@@ -8,28 +9,47 @@ using XMonitor.Core;
 namespace XMonitor.ServiceProcess
 {
     /// <summary>
-    /// 表示服务进程对象
+    /// 表示服务服务监控
     /// </summary>
-    public class ServiceProcessMonitor : IMonitor
+    class ServiceProcessMonitor : Monitor<ServiceProcessOptions>
     {
         /// <summary>
-        /// 获取或设置别名
+        /// 获取服务名称
         /// </summary>
-        public string Alias { get; set; }
+        public ServiceController Service { get; }
 
         /// <summary>
-        /// 获取或设置服务进程名称
+        /// 构造服务监控对象
         /// </summary>
-        public string ServiceName { get; set; }
-
-        /// <summary>
-        /// 获取或设置网址
-        /// </summary>
-        object IMonitor.Value
+        /// <param name="alias">服务别名</param>
+        /// <param name="serviceName">服务名</param>
+        /// <param name="options">服务选项</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ServiceProcessMonitor(string alias, string serviceName, ServiceProcessOptions options)
+            : base(options, alias, serviceName)
         {
-            get
+            this.Service = ServiceController.GetServices().Where(item => item.ServiceName == serviceName).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 执行一次监控
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OnCheckMonitorAsync()
+        {
+            try
             {
-                return this.ServiceName;
+                this.Service.Refresh();
+                if (this.Service.Status == ServiceControllerStatus.Stopped)
+                {
+                    base.Options.Logger?.Debug("服务被停止,正在恢复.");
+                    this.Service.Start();
+                    await base.NotifyAsync(new Exception("服务被停止,已恢复启动."));
+                }
+            }
+            catch (Exception ex)
+            {
+                base.Options.Logger?.Error(ex);
             }
         }
     }

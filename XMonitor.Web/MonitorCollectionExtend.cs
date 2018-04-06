@@ -9,7 +9,7 @@ using XMonitor.Web;
 namespace XMonitor.Core
 {
     /// <summary>
-    ///  监控集合扩展
+    /// 站点监控集合扩展
     /// </summary>
     public static class MonitorCollectionExtend
     {
