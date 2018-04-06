@@ -2,13 +2,14 @@
 using System.IO;
 using XMonitor.Core;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace XMonitor.Process
 {
     /// <summary>
     /// 表示进程对象
     /// </summary>
-    public class ProcessMonitor : IMonitor
+    public class ProcessMonitor : Monitor<ProcessOptions>
     {
         /// <summary>
         /// 获取或设置别名
@@ -64,6 +65,11 @@ namespace XMonitor.Process
         {
             var processName = Path.GetFileNameWithoutExtension(this.FilePath);
             return System.Diagnostics.Process.GetProcessesByName(processName)?.FirstOrDefault();
+        }
+
+        protected override Task OnCheckMonitorAsync()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

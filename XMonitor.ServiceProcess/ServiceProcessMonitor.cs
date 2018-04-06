@@ -14,7 +14,7 @@ namespace XMonitor.ServiceProcess
     class ServiceProcessMonitor : Monitor<ServiceProcessOptions>
     {
         /// <summary>
-        /// 获取服务名称
+        /// 获取服务信息
         /// </summary>
         public ServiceController Service { get; }
 
