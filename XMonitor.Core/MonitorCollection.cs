@@ -8,37 +8,37 @@ using System.Threading.Tasks;
 namespace XMonitor.Core
 {
     /// <summary>
-    /// 表示服务集合
+    /// 表示监控集合
     /// </summary>
     public class MonitorCollection : IEnumerable<IMonitor>
     {
         /// <summary>
-        /// 服务集合
+        /// 监控集合
         /// </summary>
         private readonly List<IMonitor> serviceList = new List<IMonitor>();
 
         /// <summary>
-        /// 获取服务的数量
+        /// 获取监控的数量
         /// </summary>
         public int Count => this.serviceList.Count;
 
         /// <summary>
-        /// 获取服务是否在运行
+        /// 获取监控是否在运行
         /// </summary>
         public bool IsServicesRunning { get; private set; }
 
         /// <summary>
         /// 添加服务
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="monitor">监控对象</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public void Add(IMonitor service)
+        public void Add(IMonitor monitor)
         {
-            if (service == null)
+            if (monitor == null)
             {
-                throw new ArgumentNullException(nameof(service));
+                throw new ArgumentNullException(nameof(monitor));
             }
-            this.serviceList.Add(service);
+            this.serviceList.Add(monitor);
         }
 
         /// <summary>
