@@ -11,7 +11,7 @@ namespace XMonitor.Web
     /// <summary>
     /// 网站服务选项
     /// </summary>
-    public class WebOptions : IMonitorServiceOptions
+    public class WebOptions : IMonitorOptions
     {
         /// <summary>
         /// 获取或设置日志工具
@@ -48,11 +48,6 @@ namespace XMonitor.Web
         /// 默认为200-299
         /// </summary>
         public Func<HttpStatusCode, bool> HttpStatusFilter { get; set; }
-
-        /// <summary>
-        /// 获取监控的网址集合
-        /// </summary>
-        public MonitorCollection Monitors { get; } = new MonitorCollection();
 
         /// <summary>
         /// 获取通知通道列表

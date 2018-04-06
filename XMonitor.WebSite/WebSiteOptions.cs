@@ -9,7 +9,7 @@ namespace XMonitor.WebSite
     /// <summary>
     /// 表示站点状态监控的配置项
     /// </summary>
-    public class WebSiteOptions : IMonitorServiceOptions
+    public class WebSiteOptions : IMonitorOptions
     {
         /// <summary>
         /// 获取或设置日志工具

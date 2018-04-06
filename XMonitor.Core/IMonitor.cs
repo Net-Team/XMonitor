@@ -14,11 +14,21 @@ namespace XMonitor.Core
         /// <summary>
         /// 获取或设置别名
         /// </summary>
-        string Alias { get; set; }
+        string Alias { get; }
 
         /// <summary>
         /// 获取值
         /// </summary>
         object Value { get; }
+
+        /// <summary>
+        /// 启动服务
+        /// </summary>
+        void Start();
+
+        /// <summary>
+        /// 停止服务
+        /// </summary>
+        void Stop();    
     }
 }

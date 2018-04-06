@@ -7,7 +7,7 @@ namespace XMonitor.ServiceProcess
     /// <summary>
     /// 表示服务进程监控的配置项
     /// </summary>
-    public class ServiceProcessOptions : IMonitorServiceOptions
+    public class ServiceProcessOptions : IMonitorOptions
     {
         /// <summary>
         /// 获取或设置日志工具

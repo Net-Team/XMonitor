@@ -26,14 +26,14 @@ namespace XMonitor.Core
         /// <summary>
         /// 任务
         /// </summary>
-        public IMonitorServiceOptions options { get; private set; }
+        public IMonitorOptions options { get; private set; }
 
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="monitor">监控对象</param>
         /// <param name="options">监控服务选项</param>
-        public MonitorChecker(TMonitor monitor, IMonitorServiceOptions options)
+        public MonitorChecker(TMonitor monitor, IMonitorOptions options)
         {
             this.Monitor = monitor;
             this.options = options;

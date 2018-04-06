@@ -24,13 +24,21 @@ namespace XMonitor.Web
         /// </summary>
         public bool IsRunning { get; private set; }
 
+
+        /// <summary>
+        /// 监控对象
+        /// </summary>
+        public WebMonitorChecker monitorChecker { get; }
+
         /// <summary>
         /// 站点状态检测服务
         /// </summary>
         /// <param name="options">选项</param>
-        public WebMonitorService(WebOptions options)
+        /// <param name="monitorChecker">监控对象</param>
+        public WebMonitorService(WebOptions options, WebMonitorChecker monitorChecker)
         {
             this.options = options;
+            this.monitorChecker = monitorChecker;
 
         }
 
@@ -52,20 +60,18 @@ namespace XMonitor.Web
         {
             if (this.IsRunning == true)
             {
-                foreach (var monitor in this.options.Monitors)
+
+                try
                 {
-                    try
-                    {
-                        await monitor.OnCheckMonitorAsync();
-                    }
-                    catch (HttpRequestException ex)
-                    {
-                        await this.NotifyAsync(monitor.Monitor, ex);
-                    }
-                    catch (Exception ex)
-                    {
-                        this.options.Logger?.Error(ex);
-                    }
+                    await monitorChecker.OnCheckMonitorAsync();
+                }
+                catch (HttpRequestException ex)
+                {
+                    await this.NotifyAsync(monitorChecker.Monitor, ex);
+                }
+                catch (Exception ex)
+                {
+                    this.options.Logger?.Error(ex);
                 }
                 await Task.Delay(this.options.Interval);
             }
@@ -85,10 +91,7 @@ namespace XMonitor.Web
         /// </summary>
         public void Dispose()
         {
-            foreach (var monitor in this.options.Monitors)
-            {
-                monitor.Dispose();
-            }
+            monitorChecker.Dispose();
         }
 
         /// <summary>

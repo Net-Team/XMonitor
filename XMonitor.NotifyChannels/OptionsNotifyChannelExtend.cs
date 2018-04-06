@@ -13,7 +13,7 @@ namespace XMonitor.Core
         /// </summary>
         /// <param name="msOptions"></param>
         /// <param name="options">选项</param>
-        public static void UseEmailNotifyChannel(this IMonitorServiceOptions msOptions, Action<EmailChannelOptions> options)
+        public static void UseEmailNotifyChannel(this IMonitorOptions msOptions, Action<EmailChannelOptions> options)
         {
             var opt = new EmailChannelOptions();
             options?.Invoke(opt);
@@ -27,7 +27,7 @@ namespace XMonitor.Core
         /// </summary>
         /// <param name="msOptions"></param>
         /// <param name="options">选项</param>
-        public static void UseHttpNotifyChannel(this IMonitorServiceOptions msOptions, Action<HttpChannelOptions> options)
+        public static void UseHttpNotifyChannel(this IMonitorOptions msOptions, Action<HttpChannelOptions> options)
         {
             var opt = new HttpChannelOptions();
             options?.Invoke(opt);

@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\XMonitor.Core\XMonitor.Core.csproj" />
     <ProjectReference Include="..\XMonitor.NotifyChannels\XMonitor.NotifyChannels.csproj" />
-    <ProjectReference Include="..\XMonitor.ServiceProcess\XMonitor.ServiceProcess.csproj" />
     <ProjectReference Include="..\XMonitor.Web\XMonitor.Web.csproj" />
   </ItemGroup>
 

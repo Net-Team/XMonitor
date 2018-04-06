@@ -9,7 +9,7 @@ namespace XMonitor.Core
     /// <summary>
     /// 定义监控服务选项接口
     /// </summary>
-    public interface IMonitorServiceOptions
+    public interface IMonitorOptions
     {
         /// <summary>
         /// 获取或设置日志工具

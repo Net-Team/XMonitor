@@ -14,7 +14,7 @@ namespace XMonitor.Core
         /// <param name="services"></param>
         /// <param name="options">配置选项</param>
         /// <returns></returns>
-        public static ServiceCollection UseWebSiteMonitorService(this ServiceCollection services, Action<WebSiteOptions> options)
+        public static MonitorCollection UseWebSiteMonitorService(this MonitorCollection services, Action<WebSiteOptions> options)
         {
             var opt = new WebSiteOptions();
             options?.Invoke(opt);

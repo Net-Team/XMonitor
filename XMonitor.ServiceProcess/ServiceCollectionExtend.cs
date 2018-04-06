@@ -14,7 +14,7 @@ namespace XMonitor.Core
         /// <param name="services"></param>
         /// <param name="options">配置选项</param>
         /// <returns></returns>
-        public static ServiceCollection UseServiceProcessMonitorService(this ServiceCollection services, Action<ServiceProcessOptions> options)
+        public static MonitorCollection UseServiceProcessMonitorService(this MonitorCollection services, Action<ServiceProcessOptions> options)
         {
             var opt = new ServiceProcessOptions();
             options?.Invoke(opt);

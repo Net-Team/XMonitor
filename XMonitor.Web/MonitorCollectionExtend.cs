@@ -11,20 +11,22 @@ namespace XMonitor.Core
     /// <summary>
     ///  ServiceCollection扩展
     /// </summary>
-    public static class ServiceCollectionExtend
+    public static class MonitorCollectionExtend
     {
         /// <summary>
-        /// 使用http状态码监控服务
+        /// 添加http状态码监控服务
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="alias">网站名称</param>
+        /// <param name="uri">网站地址</param>
         /// <param name="options">配置选项</param>
         /// <returns></returns>
-        public static ServiceCollection UseWebMonitorService(this ServiceCollection services, Action<WebOptions> options)
+        public static MonitorCollection UseWebMonitorService(this MonitorCollection services, string alias, Uri uri, Action<WebOptions> options)
         {
             var opt = new WebOptions();
             options?.Invoke(opt);
 
-            var service = new WebMonitorService(opt);
+            var service = new WebMonitor(alias, uri, opt);
             services.Add(service);
             return services;
         }

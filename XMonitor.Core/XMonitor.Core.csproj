@@ -4,4 +4,9 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\XMonitor.Core.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="IMonitorService.cs" />
+    <Compile Remove="MonitorChecker.cs" />
+    <Compile Remove="MonitorCollectionBack.cs" />
+  </ItemGroup>
 </Project>

@@ -1,43 +1,91 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace XMonitor.Core
 {
     /// <summary>
-    /// 表示监控的对象集合
+    /// 表示服务集合
     /// </summary>
-    public class MonitorCollection<MonitorChecker> : IEnumerable<MonitorChecker>
+    public class MonitorCollection : IEnumerable<IMonitor>
     {
         /// <summary>
-        /// 监控的对象列表
+        /// 服务集合
         /// </summary>
-        private readonly List<MonitorChecker> monitors = new List<MonitorChecker>();
+        private readonly List<IMonitor> serviceList = new List<IMonitor>();
 
         /// <summary>
-        /// 获取监控对象的数量
+        /// 获取服务的数量
         /// </summary>
-        public int Count => this.monitors.Count;
+        public int Count => this.serviceList.Count;
 
         /// <summary>
-        /// 添加监控对象
+        /// 获取服务是否在运行
         /// </summary>
-        /// <param name="monitor">监控对象</param>
-        protected void Add(MonitorChecker monitor)
+        public bool IsServicesRunning { get; private set; }
+
+        /// <summary>
+        /// 添加服务
+        /// </summary>
+        /// <param name="service"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void Add(IMonitor service)
         {
-            this.monitors.Add(monitor);
+            if (service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+            this.serviceList.Add(service);
         }
 
         /// <summary>
-        /// 返回监控对象迭代器
+        /// 启动所有服务
+        /// </summary>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void Start()
+        {
+            if (this.IsServicesRunning == true)
+            {
+                throw new InvalidOperationException("服务已启动过..");
+            }
+
+            foreach (var item in this)
+            {
+                item.Start();
+            }
+        }
+
+        /// <summary>
+        /// 停止所有服务
+        /// <exception cref="InvalidOperationException"></exception>
+        /// </summary>
+        public void Stop()
+        {
+            if (this.IsServicesRunning == false)
+            {
+                throw new InvalidOperationException("服务已停止过..");
+            }
+
+            foreach (var item in this)
+            {
+                item.Stop();
+            }
+        }
+
+        /// <summary>
+        /// 返回迭代器
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<MonitorChecker> GetEnumerator()
+        public IEnumerator<IMonitor> GetEnumerator()
         {
-            return this.monitors.GetEnumerator();
+            return this.serviceList.GetEnumerator();
         }
 
         /// <summary>
-        /// 返回监控对象迭代器
+        /// 返回迭代器
         /// </summary>
         /// <returns></returns>
         IEnumerator IEnumerable.GetEnumerator()
