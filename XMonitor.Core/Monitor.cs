@@ -77,8 +77,6 @@ namespace XMonitor.Core
             this.timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
-
-
         /// <summary>
         /// 执行检测
         /// </summary>

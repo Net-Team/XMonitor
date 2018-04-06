@@ -82,7 +82,7 @@ namespace XMonitor.Web
         /// </summary>
         /// <param name="exception">异常</param>
         /// <returns></returns>
-        private async Task NotifyAsync(HttpRequestException exception)
+        private async Task NotifyAsync(Exception exception)
         {
             var context = new NotifyContext
             {
