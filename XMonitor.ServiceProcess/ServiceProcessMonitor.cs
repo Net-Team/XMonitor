@@ -25,10 +25,15 @@ namespace XMonitor.ServiceProcess
         /// <param name="serviceName">服务名</param>
         /// <param name="options">服务选项</param>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public ServiceProcessMonitor(string alias, string serviceName, ServiceProcessOptions options)
             : base(options, alias, serviceName)
         {
             this.Service = ServiceController.GetServices().Where(item => item.ServiceName == serviceName).FirstOrDefault();
+            if (this.Service == null)
+            {
+                throw new ArgumentException("服务不存在.", nameof(serviceName));
+            }
         }
 
         /// <summary>

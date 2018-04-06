@@ -41,7 +41,7 @@ namespace XMonitor
 
             services.AddServiceProcessMonitor("服务", "aaa", opt =>
             {
-               
+                opt.Logger = new MonitorLoger();
             });
 
             //services.UseServiceProcessMonitorService(opt =>
