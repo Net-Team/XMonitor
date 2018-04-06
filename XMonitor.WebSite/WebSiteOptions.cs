@@ -18,20 +18,20 @@ namespace XMonitor.WebSite
 
         /// <summary>
         /// 获取或设置检测的时间间隔
-        /// 默认1分钟
+        /// 默认1分钟检测一次
         /// </summary>
         public TimeSpan Interval { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
-        /// 请求超时时间
+        /// 获取或设置请求超时时间
         /// 超时将处理为异常
         /// 默认1分钟
         /// </summary>
         public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1d);
 
         /// <summary>
-        /// 重试次数，当超过指定数次才定义为错误
-        /// 默认3次
+        /// 获取或设置重试次数
+        /// 当超过指定数次才定义为错误 , 默认3次
         /// </summary>
         public int Retry { get; set; } = 3;
 
@@ -48,20 +48,14 @@ namespace XMonitor.WebSite
         public Func<HttpStatusCode, bool> HttpStatusFilter { get; set; }
 
         /// <summary>
-        /// 获取监控的网址集合
-        /// </summary>
-        public MonitorCollection Monitors { get; } = new MonitorCollection();
-
-        /// <summary>
         /// 获取通知通道列表
         /// </summary>
         public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();
 
-
         /// <summary>
         /// 站点状态监控的配置项
         /// </summary>
-        public WebSiteOptions()
+        public WebOptions()
         {
             this.HttpStatusFilter = this.IsSuccessStatusCode;
         }
@@ -69,7 +63,7 @@ namespace XMonitor.WebSite
         /// <summary>
         /// 是否为正确的状态码
         /// </summary>
-        /// <param name="httpStatusCode"></param>
+        /// <param name="httpStatusCode">http状态码</param>
         /// <returns></returns>
         private bool IsSuccessStatusCode(HttpStatusCode httpStatusCode)
         {

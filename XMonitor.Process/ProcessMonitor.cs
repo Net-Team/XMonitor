@@ -10,13 +10,12 @@ namespace XMonitor.Process
     /// <summary>
     /// 表示应用程序对象
     /// </summary>
-    public class ProcessMonitor : Monitor<ProcessOptions>
+    class ProcessMonitor : Monitor<ProcessOptions>
     {
         /// <summary>
         /// 获取应用程序信息
         /// </summary>
         public ProcessInfo ProcessInfo { get; }
-
 
         /// <summary>
         /// 构建应用程序对象
