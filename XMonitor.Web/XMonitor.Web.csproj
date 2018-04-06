@@ -5,10 +5,6 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="WebMonitorChecker.cs" />
-    <Compile Remove="WebMonitorService.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Laojiu.WebApiClient" Version="1.1.7" />
   </ItemGroup>
   <ItemGroup>

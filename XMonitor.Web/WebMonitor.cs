@@ -12,7 +12,7 @@ namespace XMonitor.Web
     /// <summary>
     /// 站点监控
     /// </summary>
-    public class WebMonitor : Monitor<WebOptions>
+    class WebMonitor : Monitor<WebOptions>
     {
         /// <summary>
         /// api客户端
