@@ -12,12 +12,12 @@ namespace XMonitor.Core
     public interface IMonitor
     {
         /// <summary>
-        /// 获取或设置别名
+        /// 获取别名
         /// </summary>
         string Alias { get; }
 
         /// <summary>
-        /// 监控目标标识
+        /// 获取监控目标标识
         /// </summary>
         object Value { get; }
 
