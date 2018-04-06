@@ -15,12 +15,6 @@ namespace XMonitor.Web
     public class WebMonitor : Monitor<WebOptions>
     {
         /// <summary>
-        /// 获取或设置网址
-        /// </summary>
-        public Uri Uri { get; set; }
-
-
-        /// <summary>
         /// 网站监控选项
         /// </summary>
         private readonly WebOptions opt;
@@ -31,10 +25,9 @@ namespace XMonitor.Web
         private readonly IHttpStatusApi httpStatusApi;
 
         /// <summary>
-        /// 获取或设置是否在运行
+        /// 获取或设置网址
         /// </summary>
-        public bool IsRunning { get; private set; }
-
+        public Uri Uri { get; }
 
         /// <summary>
         /// 构造监控对象
@@ -68,13 +61,11 @@ namespace XMonitor.Web
         }
 
         /// <summary>
-        /// 检测异常
-        /// 输出日志及通知
+        /// 检测异常通知
         /// </summary>
         /// <param name="ex"></param>
         protected override async Task OnCheckExceptionAsync(Exception ex)
         {
-            this.opt.Logger.Debug(ex.Message);
             await base.NotifyAsync(ex);
         }
     }

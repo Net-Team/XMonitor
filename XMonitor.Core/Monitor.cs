@@ -12,6 +12,21 @@ namespace XMonitor.Core
     /// </summary>
     public abstract class Monitor<TOptions> : IMonitor, IDisposable where TOptions : IMonitorOptions
     {
+
+#if NET45
+        /// <summary>
+        /// 完成的任务
+        /// </summary>
+        /// <returns></returns>
+        private static readonly Task CompletedTask = Task.FromResult<object>(null);
+#else
+        /// <summary>
+        /// 完成的任务
+        /// </summary>
+        /// <returns></returns>
+        private static readonly Task CompletedTask = Task.CompletedTask;
+#endif
+
         /// <summary>
         /// 定时器
         /// </summary>
@@ -40,6 +55,10 @@ namespace XMonitor.Core
         /// <param name="value">对象值</param>
         public Monitor(TOptions options, string alias, object value)
         {
+            if (options == null || string.IsNullOrEmpty(alias) || value == null)
+            {
+                throw new Exception("参数异常.");
+            }
             this.Alias = alias;
             this.Value = value;
             this.Options = options;
@@ -87,9 +106,10 @@ namespace XMonitor.Core
         /// 异常输出
         /// </summary>
         /// <param name="ex">异常消息</param>
-        protected virtual async Task OnCheckExceptionAsync(Exception ex)
+        protected virtual Task OnCheckExceptionAsync(Exception ex)
         {
             this.Options.Logger.Error(ex);
+            return CompletedTask;
         }
 
         /// <summary>
