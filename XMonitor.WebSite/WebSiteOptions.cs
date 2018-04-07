@@ -55,7 +55,7 @@ namespace XMonitor.WebSite
         /// <summary>
         /// 站点状态监控的配置项
         /// </summary>
-        public WebOptions()
+        public WebSiteOptions()
         {
             this.HttpStatusFilter = this.IsSuccessStatusCode;
         }

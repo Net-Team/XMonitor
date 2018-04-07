@@ -17,12 +17,12 @@ namespace XMonitor.Core
         /// <param name="options">配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static MonitorCollection AddWebMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebSizeOptions> options)
+        public static MonitorCollection AddWebMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebSiteOptions> options)
         {
-            var opt = new WebOptions();
+            var opt = new WebSiteOptions();
             options?.Invoke(opt);
 
-            var service = new WebMonitor(alias, uri, opt);
+            var service = new WebSiteMonitor(opt, alias, uri);
             monitors.Add(service);
             return monitors;
         }
