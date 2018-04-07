@@ -10,7 +10,7 @@ namespace XMonitor.Core
     /// <summary>
     /// 监控对象
     /// </summary>
-    public abstract class Monitor<TOptions> : IMonitor, IDisposable where TOptions : IMonitorOptions
+    public abstract class Monitor<TOptions> : IMonitor, IDisposable where TOptions : class, IMonitorOptions
     {
 
 #if NET45
@@ -33,19 +33,24 @@ namespace XMonitor.Core
         private readonly Timer timer;
 
         /// <summary>
+        /// 是否在运行中
+        /// </summary>
+        private bool isRunning = false;
+
+        /// <summary>
         /// 获取别名
         /// </summary>
-        public string Alias { get; }
+        public string Alias { get; private set; }
 
         /// <summary>
         /// 获取监控目标标识
         /// </summary>
-        public object Value { get; }
+        public object Value { get; private set; }
 
         /// <summary>
         /// 获取任务选项
         /// </summary>
-        public TOptions Options { get; }
+        public TOptions Options { get; private set; }
 
         /// <summary>
         /// 构造监控对象
@@ -56,17 +61,15 @@ namespace XMonitor.Core
         /// <exception cref="ArgumentNullException"></exception>
         public Monitor(TOptions options, string alias, object value)
         {
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
-
             if (string.IsNullOrEmpty(alias))
+            {
                 throw new ArgumentNullException(nameof(alias));
-
-            value = value ?? throw new ArgumentNullException(nameof(value));
+            }
 
             this.Alias = alias;
-            this.Value = value;
-            this.Options = options;
+            this.Value = value ?? throw new ArgumentNullException(nameof(value));
+            this.Options = options ?? throw new ArgumentNullException(nameof(options));
+
             this.timer = new Timer(async (state) =>
             {
                 try
@@ -79,7 +82,10 @@ namespace XMonitor.Core
                 }
                 finally
                 {
-                    this.timer.Change((Int64)this.Options.Interval.TotalMilliseconds, Timeout.Infinite);
+                    if (this.isRunning == true)
+                    {
+                        this.timer.Change((Int64)this.Options.Interval.TotalMilliseconds, Timeout.Infinite);
+                    }
                 }
             }, null, Timeout.Infinite, Timeout.Infinite);
         }
@@ -89,6 +95,7 @@ namespace XMonitor.Core
         /// </summary>
         public void Start()
         {
+            this.isRunning = true;
             this.timer.Change(0, Timeout.Infinite);
         }
 
@@ -97,18 +104,18 @@ namespace XMonitor.Core
         /// </summary>
         public void Stop()
         {
+            this.isRunning = false;
             this.timer.Change(Timeout.Infinite, Timeout.Infinite);
         }
 
         /// <summary>
-        /// 执行检测
+        /// 执行检测时触发
         /// </summary>
         /// <returns></returns>
         protected abstract Task OnCheckMonitorAsync();
 
         /// <summary>
-        /// 执行监控
-        /// 异常输出
+        /// 执行检测产生异常时触发
         /// </summary>
         /// <param name="ex">异常消息</param>
         protected virtual Task OnCheckExceptionAsync(Exception ex)

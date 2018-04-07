@@ -32,7 +32,7 @@ namespace XMonitor.WebSite
         /// <param name="uri">站点地址</param>
         /// <exception cref="ArgumentNullException"></exception>
         public WebSiteMonitor(WebSiteOptions options, string alias, Uri uri)
-            : base(options, alias, uri = uri ?? throw new ArgumentNullException(nameof(uri)))
+            : base(options, alias, uri ?? throw new ArgumentNullException(nameof(uri)))
         {
             this.Uri = uri;
             var config = new HttpApiConfig();
@@ -53,7 +53,7 @@ namespace XMonitor.WebSite
         }
 
         /// <summary>
-        /// 检测异常通知
+        /// 执行检测产生异常时触发
         /// </summary>
         /// <param name="ex">异常</param>
         protected override async Task OnCheckExceptionAsync(Exception ex)

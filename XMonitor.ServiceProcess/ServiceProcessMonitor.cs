@@ -14,9 +14,9 @@ namespace XMonitor.ServiceProcess
     class ServiceProcessMonitor : Monitor<ServiceProcessOptions>
     {
         /// <summary>
-        /// 获取服务信息
+        /// 获取服务名称
         /// </summary>
-        public ServiceController Service { get; }
+        public string ServiceName { get; private set; }
 
         /// <summary>
         /// 构造服务监控对象
@@ -27,27 +27,9 @@ namespace XMonitor.ServiceProcess
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         public ServiceProcessMonitor(ServiceProcessOptions options, string alias, string serviceName)
-            : base(options, alias, IsNullOrEmptyToException(serviceName))
+            : base(options, alias, serviceName ?? throw new ArgumentNullException(serviceName))
         {
-            this.Service = ServiceController.GetServices().Where(item => item.ServiceName.Equals(serviceName, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-            if (this.Service == null)
-            {
-                throw new ArgumentException("服务不存在.", nameof(serviceName));
-            }
-        }
-
-        /// <summary>
-        /// 判断服务名是否为空
-        /// </summary>
-        /// <param name="serviceName">服务名</param>
-        /// <returns></returns>
-        private static string IsNullOrEmptyToException(string serviceName)
-        {
-            if (string.IsNullOrEmpty(serviceName))
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            return serviceName;
+            this.ServiceName = serviceName;
         }
 
         /// <summary>
@@ -58,18 +40,45 @@ namespace XMonitor.ServiceProcess
         {
             try
             {
-                this.Service.Refresh();
-                if (this.Service.Status == ServiceControllerStatus.Stopped)
+                var service = GetServiceByName(this.ServiceName);
+                if (service.Status == ServiceControllerStatus.Stopped)
                 {
-                    base.Options.Logger?.Debug("服务被停止,正在恢复.");
-                    this.Service.Start();
-                    await base.NotifyAsync(new Exception("服务被停止,已恢复启动."));
+                    base.Options.Logger?.Debug("服务已经被停止，正在恢复.");
+                    service.Start();
+                    base.Options.Logger?.Debug("服务已经被停止，已恢复启动..");
                 }
             }
             catch (Exception ex)
             {
-                base.Options.Logger?.Error(ex);
+                await base.NotifyAsync(ex);
             }
         }
+
+
+        /// <summary>
+        /// 通过服务名获取服务信息
+        /// </summary>
+        /// <param name="serviceName">服务名</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <returns></returns>
+        private static ServiceController GetServiceByName(string serviceName)
+        {
+            if (string.IsNullOrEmpty(serviceName))
+            {
+                throw new ArgumentNullException(nameof(serviceName));
+            }
+
+            var service = ServiceController
+                .GetServices()
+                .FirstOrDefault(s => string.Equals(s.ServiceName, serviceName, StringComparison.OrdinalIgnoreCase));
+
+            if (service == null)
+            {
+                throw new ArgumentException($"服务{serviceName}不存在", nameof(serviceName));
+            }
+            return service;
+        }
+
     }
 }

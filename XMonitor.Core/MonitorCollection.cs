@@ -8,27 +8,27 @@ using System.Threading.Tasks;
 namespace XMonitor.Core
 {
     /// <summary>
-    /// 表示监控集合
+    /// 表示监控对象集合
     /// </summary>
     public class MonitorCollection : IEnumerable<IMonitor>
     {
         /// <summary>
-        /// 监控集合
+        /// 监控对象集合
         /// </summary>
-        private readonly List<IMonitor> serviceList = new List<IMonitor>();
+        private readonly List<IMonitor> monitorList = new List<IMonitor>();
 
         /// <summary>
-        /// 获取监控的数量
+        /// 获取监控对象的数量
         /// </summary>
-        public int Count => this.serviceList.Count;
+        public int Count => this.monitorList.Count;
 
         /// <summary>
         /// 获取监控是否在运行
         /// </summary>
-        public bool IsServicesRunning { get; private set; }
+        public bool IsRunning { get; private set; }
 
         /// <summary>
-        /// 添加服务
+        /// 添加监控对象
         /// </summary>
         /// <param name="monitor">监控对象</param>
         /// <exception cref="ArgumentNullException"></exception>
@@ -38,18 +38,18 @@ namespace XMonitor.Core
             {
                 throw new ArgumentNullException(nameof(monitor));
             }
-            this.serviceList.Add(monitor);
+            this.monitorList.Add(monitor);
         }
 
         /// <summary>
-        /// 启动所有服务
+        /// 启动所有监控对象
         /// </summary>
         /// <exception cref="InvalidOperationException"></exception>
         public void Start()
         {
-            if (this.IsServicesRunning == true)
+            if (this.IsRunning == true)
             {
-                throw new InvalidOperationException("服务已启动过..");
+                throw new InvalidOperationException("监控对象已启动过..");
             }
 
             foreach (var item in this)
@@ -59,14 +59,14 @@ namespace XMonitor.Core
         }
 
         /// <summary>
-        /// 停止所有服务
+        /// 停止所有监控对象
         /// <exception cref="InvalidOperationException"></exception>
         /// </summary>
         public void Stop()
         {
-            if (this.IsServicesRunning == false)
+            if (this.IsRunning == false)
             {
-                throw new InvalidOperationException("服务已停止过..");
+                throw new InvalidOperationException("监控对象已停止过..");
             }
 
             foreach (var item in this)
@@ -81,7 +81,7 @@ namespace XMonitor.Core
         /// <returns></returns>
         public IEnumerator<IMonitor> GetEnumerator()
         {
-            return this.serviceList.GetEnumerator();
+            return this.monitorList.GetEnumerator();
         }
 
         /// <summary>

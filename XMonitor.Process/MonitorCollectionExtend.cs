@@ -4,17 +4,17 @@ using System;
 namespace XMonitor.Core
 {
     /// <summary>
-    /// 应用程序监控集合扩展
+    /// 进程监控集合扩展
     /// </summary>
     public static class MonitorCollectionExtend
     {
         /// <summary>
         /// 添加应用程序监控
         /// </summary>
-        /// <param name="monitor">应用程序监控集合</param>
-        /// <param name="alias">应用程序别名</param>
-        /// <param name="processInfo">应用程序信息</param>
-        /// <param name="options">应用程序配置选项</param>
+        /// <param name="monitor">进程监控集合</param>
+        /// <param name="alias">进程别名</param>
+        /// <param name="processInfo">进程信息</param>
+        /// <param name="options">进程配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <returns></returns>

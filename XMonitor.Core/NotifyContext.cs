@@ -12,7 +12,7 @@ namespace XMonitor.Core
     public class NotifyContext
     {
         /// <summary>
-        /// 获取或设置监控的对象
+        /// 获取或设置监控对象
         /// </summary>
         public IMonitor Monitor { get; set; }
 

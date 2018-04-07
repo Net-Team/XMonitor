@@ -9,12 +9,12 @@ namespace XMonitor.Core
     public static class MonitorCollectionExtend
     {
         /// <summary>
-        /// 使用服务状态监控服务
+        /// 添加服务状态监控
         /// </summary>
         /// <param name="monitor">服务监控集合</param>
         /// <param name="alias">服务别名</param>
         /// <param name="serviceName">服务名称</param>
-        /// <param name="options">配置服务选项</param>
+        /// <param name="options">配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <returns></returns>

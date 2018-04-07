@@ -22,12 +22,12 @@ namespace XMonitor.Core
         object Value { get; }
 
         /// <summary>
-        /// 启动服务
+        /// 启动监控
         /// </summary>
         void Start();
 
         /// <summary>
-        /// 停止服务
+        /// 停止监控
         /// </summary>
         void Stop();    
     }

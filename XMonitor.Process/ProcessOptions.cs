@@ -15,11 +15,6 @@ namespace XMonitor.Process
         public ILogger Logger { get; set; }
 
         /// <summary>
-        /// 获取监控的进程列表
-        /// </summary>
-        public MonitorCollection Monitors { get; } = new MonitorCollection();
-
-        /// <summary>
         /// 获取通知通道列表
         /// </summary>
         public List<INotifyChannel> NotifyChannels { get; } = new List<INotifyChannel>();

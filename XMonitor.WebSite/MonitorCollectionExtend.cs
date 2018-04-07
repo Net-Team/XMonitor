@@ -9,7 +9,7 @@ namespace XMonitor.Core
     public static class MonitorCollectionExtend
     {
         /// <summary>
-        /// 添加站点监控服务
+        /// 添加站点监控
         /// </summary>
         /// <param name="monitors">监控集合</param>
         /// <param name="alias">站点名称</param>
@@ -17,7 +17,7 @@ namespace XMonitor.Core
         /// <param name="options">配置选项</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns></returns>
-        public static MonitorCollection AddWebMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebSiteOptions> options)
+        public static MonitorCollection AddWebSiteMonitor(this MonitorCollection monitors, string alias, Uri uri, Action<WebSiteOptions> options)
         {
             var opt = new WebSiteOptions();
             options?.Invoke(opt);

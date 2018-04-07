@@ -1,7 +1,6 @@
-﻿using XMonitor.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using XMonitor.Web;
+using XMonitor.Core;
 using XMonitor.NotifyChannels;
 
 namespace XMonitor
@@ -10,56 +9,38 @@ namespace XMonitor
     {
         static void Main(string[] args)
         {
-
-
-            Action<HttpChannelOptions> httpChannelOptions = (f =>
+            Action<IMonitorOptions> UseNotify = (opt =>
             {
-                f.Uri = new Uri("http://www.baidu.com");
-                f.Header.Add(new KeyValuePair<string, string>("key", "value"));
-                f.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.Monitor.Alias + "v1.0");
-            });
+                opt.UseEmailNotifyChannel(n =>
+                {
+                    n.Smtp = "mail.taichuan.com";
+                    n.SenderAccout = "iot@taichaun.com";
+                    n.SenderPassword = "tc123457";
+                    n.TargetEmails.Add("tangfeng@taichuan.com");
+                    n.Title = ctx => "v1.0" + ctx.Monitor.Alias;
+                });
 
-            Action<EmailChannelOptions> emailChannelOptions = (f =>
-            {
-                f.Smtp = "mail.taichuan.com";
-                f.SenderAccout = "iot@taichaun.com";
-                f.SenderPassword = "tc123457";
-                f.TargetEmails.Add("tangfeng@taichuan.com");
-                f.Title = ctx => "v1.0" + ctx.Monitor.Alias;
-            });
-
-            Action<WebOptions> webOpt = (f =>
-            {
-                f.UseEmailNotifyChannel(emailChannelOptions);
-                f.UseHttpNotifyChannel(httpChannelOptions);
-                f.Logger = new MonitorLoger();
-            });
-
-            var services = new MonitorCollection();
-            services.AddWebMonitor("xx1网", new Uri("http://iot.taichuan.net/404"), webOpt);
-            services.AddWebMonitor("xx2网", new Uri("http://iot.taichuan.net/405"), webOpt);
-
-            services.AddServiceProcessMonitor("服务", "aaa", opt =>
-            {
+                opt.UseHttpNotifyChannel(n =>
+                {
+                    n.Uri = new Uri("http://www.baidu.com");
+                    n.Header.Add(new KeyValuePair<string, string>("key", "value"));
+                    n.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.Monitor.Alias + "v1.0");
+                });
                 opt.Logger = new MonitorLoger();
             });
 
-            //services.UseServiceProcessMonitorService(opt =>
-            //{
-            //    opt.Monitors.Add("xx服务", "aspnet_state");
-            //    opt.UseEmailNotifyChannel(n =>
-            //    {
-            //        n.Smtp = "mail.taichuan.com";
-            //        n.SenderAccout = "iot@taichaun.com";
-            //        n.SenderPassword = "tc123457";
-            //        n.TargetEmails.Add("tangfeng@taichuan.com");
-            //        n.Title = ctx => "v1.0" + ctx.Monitor.Alias;
-            //    });
-            //    opt.Logger = new MonitorLoger();
-            //});
+            var services = new MonitorCollection()
+                .AddWebSiteMonitor("站点1", new Uri("http://iot.taichuan.net/404"), opt =>
+                {
+                    UseNotify(opt);
+                })
+                .AddServiceProcessMonitor("服务1", "serviceName", opt =>
+                {
+                    UseNotify(opt);
+                });
 
             services.Start();
-            Console.WriteLine("Hello WebSiteMonitor!");
+            Console.WriteLine("Hello XMonitor!");
             Console.ReadLine();
         }
     }

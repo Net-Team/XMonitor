@@ -8,26 +8,25 @@ using System.Threading.Tasks;
 
 namespace XMonitor.Process
 {
-
     /// <summary>
-    /// 应用程序信息
+    /// 应用进程描述信息
     /// </summary>
     public class ProcessInfo
     {
         /// <summary>
         /// 获取进程的文件路径
         /// </summary>
-        public string FilePath { get; }
+        public string FilePath { get; private set; }
 
         /// <summary>
         /// 获取启动参数字符串
         /// </summary>
-        public string Arguments { get; }
+        public string Arguments { get; private set; }
 
         /// <summary>
-        /// 获取工作路径
+        /// 获取进程的工作目录
         /// </summary>
-        public string WorkingDirectory { get; }
+        public string WorkingDirectory { get; private set; }
 
         /// <summary>
         /// 构建应用程序信息
@@ -35,25 +34,60 @@ namespace XMonitor.Process
         /// <param name="filePath">进程的文件路径</param>
         /// <param name="arguments">启动参数字符串</param>
         /// <param name="workingDirectory">工作路径</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// 
         public ProcessInfo(string filePath, string arguments = null, string workingDirectory = null)
         {
-            this.FilePath = filePath;
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentNullException(filePath);
+            }
+
+            if (File.Exists(filePath) == false)
+            {
+                throw new FileNotFoundException(filePath);
+            }
+
+            this.FilePath = Path.GetFullPath(filePath);
             this.Arguments = arguments;
-            this.WorkingDirectory = this.WorkingDirectory ?? Path.GetDirectoryName(filePath);
+            this.WorkingDirectory = this.WorkingDirectory ?? Path.GetDirectoryName(this.FilePath);
         }
 
         /// <summary>
-        /// 转换为程序启动信息
+        /// 检测进程是否已运行
         /// </summary>
         /// <returns></returns>
-        public ProcessStartInfo ToProcessStartInfo()
+        public bool IsRunning()
         {
-            return new ProcessStartInfo
+            var processName = Path.GetFileNameWithoutExtension(this.FilePath);
+            var process = System.Diagnostics.Process.GetProcessesByName(processName)?.FirstOrDefault();
+            if (process == null)
+            {
+                return false;
+            }
+            return string.Equals(process.MainModule.FileName, this.FilePath, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// 启动进程
+        /// </summary>
+        /// <exception cref="FileNotFoundException"></exception>
+        /// <returns></returns>
+        public void Start()
+        {
+            if (File.Exists(this.FilePath) == false)
+            {
+                throw new FileNotFoundException(this.FilePath);
+            }
+
+            var startInfo = new ProcessStartInfo
             {
                 Arguments = this.Arguments,
                 FileName = this.FilePath,
                 WorkingDirectory = this.WorkingDirectory
             };
+            System.Diagnostics.Process.Start(startInfo);
         }
     }
 }
