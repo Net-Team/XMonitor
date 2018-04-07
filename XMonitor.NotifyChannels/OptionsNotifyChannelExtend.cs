@@ -1,5 +1,5 @@
-﻿using XMonitor.NotifyChannels;
-using System;
+﻿using System;
+using XMonitor.NotifyChannels;
 
 namespace XMonitor.Core
 {
@@ -9,11 +9,11 @@ namespace XMonitor.Core
     public static class OptionsNotifyChannelExtend
     {
         /// <summary>
-        /// 使用邮件通知 
+        /// 添加邮件通知 
         /// </summary>
         /// <param name="msOptions"></param>
         /// <param name="options">选项</param>
-        public static void UseEmailNotifyChannel(this IMonitorOptions msOptions, Action<EmailChannelOptions> options)
+        public static void AddEmailNotifyChannel(this IMonitorOptions msOptions, Action<EmailChannelOptions> options)
         {
             var opt = new EmailChannelOptions();
             options?.Invoke(opt);
@@ -23,11 +23,11 @@ namespace XMonitor.Core
         }
 
         /// <summary>
-        /// 使用Http通知 
+        /// 添加Http通知 
         /// </summary>
         /// <param name="msOptions"></param>
         /// <param name="options">选项</param>
-        public static void UseHttpNotifyChannel(this IMonitorOptions msOptions, Action<HttpChannelOptions> options)
+        public static void AddHttpNotifyChannel(this IMonitorOptions msOptions, Action<HttpChannelOptions> options)
         {
             var opt = new HttpChannelOptions();
             options?.Invoke(opt);

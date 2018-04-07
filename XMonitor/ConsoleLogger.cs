@@ -10,7 +10,7 @@ namespace XMonitor
     /// <summary>
     /// 监控日志
     /// </summary>
-    public class MonitorLoger : ILogger
+    public class ConsoleLogger : ILogger
     {
         /// <summary>
         /// 调试日志

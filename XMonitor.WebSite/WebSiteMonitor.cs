@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using WebApiClient;
 using XMonitor.Core;
@@ -55,7 +52,7 @@ namespace XMonitor.WebSite
             }
             catch (HttpRequestException ex)
             {
-                var exception = new WebSiteMonitorException(this.Uri, ex);
+                var exception = new WebSiteReqeustException(this.Uri, ex);
                 await base.NotifyAsync(exception);
             }
         }

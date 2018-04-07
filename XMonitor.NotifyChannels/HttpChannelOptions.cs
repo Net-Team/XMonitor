@@ -1,9 +1,6 @@
-﻿using XMonitor.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using XMonitor.Core;
 
 namespace XMonitor.NotifyChannels
 {

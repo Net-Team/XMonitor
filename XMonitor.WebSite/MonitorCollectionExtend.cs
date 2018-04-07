@@ -1,5 +1,5 @@
-﻿using XMonitor.WebSite;
-using System;
+﻿using System;
+using XMonitor.WebSite;
 
 namespace XMonitor.Core
 {

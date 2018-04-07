@@ -43,6 +43,11 @@ namespace XMonitor.Process
                     base.Options.Logger?.Debug("进程已经被停止，已恢复启动..");
                 }
             }
+            catch (InvalidOperationException ex)
+            {
+                base.Options.Logger?.Debug(ex.Message);
+                await base.NotifyAsync(new MonitorException(ex));
+            }
             catch (FileNotFoundException ex)
             {
                 var message = "进程文件已被删除..";

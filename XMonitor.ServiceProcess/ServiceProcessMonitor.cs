@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading.Tasks;
 using XMonitor.Core;
 
@@ -41,13 +39,18 @@ namespace XMonitor.ServiceProcess
         {
             try
             {
-                var service = GetServiceByName(this.ServiceName);
+                var service = this.GetServiceByName();
                 if (service.Status == ServiceControllerStatus.Stopped)
                 {
                     base.Options.Logger?.Debug("服务已经被停止，正在恢复.");
                     service.Start();
                     base.Options.Logger?.Debug("服务已经被停止，已恢复启动..");
                 }
+            }
+            catch (ServiceNotFoundException ex)
+            {
+                base.Options.Logger?.Debug(ex.Message);
+                await base.NotifyAsync(new MonitorException(ex));
             }
             catch (Win32Exception ex)
             {
@@ -67,27 +70,19 @@ namespace XMonitor.ServiceProcess
         /// <summary>
         /// 通过服务名获取服务信息
         /// </summary>
-        /// <param name="serviceName">服务名</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ServiceNotFoundException"></exception>
         /// <returns></returns>
-        private static ServiceController GetServiceByName(string serviceName)
+        private ServiceController GetServiceByName()
         {
-            if (string.IsNullOrEmpty(serviceName))
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-
             var service = ServiceController
                 .GetServices()
-                .FirstOrDefault(s => string.Equals(s.ServiceName, serviceName, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(s => string.Equals(s.ServiceName, this.ServiceName, StringComparison.OrdinalIgnoreCase));
 
             if (service == null)
             {
-                throw new ArgumentException($"服务{serviceName}不存在", nameof(serviceName));
+                throw new ServiceNotFoundException(this.ServiceName);
             }
             return service;
         }
-
     }
 }

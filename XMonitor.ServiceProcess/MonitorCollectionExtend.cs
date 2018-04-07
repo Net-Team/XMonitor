@@ -1,5 +1,5 @@
-﻿using XMonitor.ServiceProcess;
-using System;
+﻿using System;
+using XMonitor.ServiceProcess;
 
 namespace XMonitor.Core
 {

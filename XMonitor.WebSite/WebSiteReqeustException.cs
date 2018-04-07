@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using XMonitor.Core;
 
 namespace XMonitor.WebSite
 {
     /// <summary>
-    /// 表示站点监控异常
+    /// 表示站点请求异常
     /// </summary>
-    class WebSiteMonitorException : MonitorException
+    class WebSiteReqeustException : MonitorException
     {
         /// <summary>
         /// 站点监控异常
@@ -19,7 +15,7 @@ namespace XMonitor.WebSite
         /// <param name="uri">站点uri</param>
         /// <param name="inner">内部异常</param>
         /// <exception cref="ArgumentNullException"></exception>
-        public WebSiteMonitorException(Uri uri, HttpRequestException inner)
+        public WebSiteReqeustException(Uri uri, HttpRequestException inner)
             : base(GetMessage(uri, inner), inner)
         {
         }

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace XMonitor.Process
 {
@@ -73,6 +70,7 @@ namespace XMonitor.Process
         /// 启动进程
         /// </summary>
         /// <exception cref="FileNotFoundException"></exception>
+        /// <exception cref="InvalidOperationException"></exception>
         /// <returns></returns>
         public void Start()
         {

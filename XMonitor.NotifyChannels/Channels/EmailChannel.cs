@@ -1,11 +1,10 @@
-﻿using XMonitor.Core;
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using XMonitor.Core;
 
 namespace XMonitor.NotifyChannels
 {
