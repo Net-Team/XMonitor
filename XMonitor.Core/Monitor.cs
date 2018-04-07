@@ -129,7 +129,7 @@ namespace XMonitor.Core
         /// </summary>
         /// <param name="ex">异常消息</param>
         /// <returns></returns>
-        protected virtual async Task NotifyAsync(Exception ex)
+        protected virtual async Task NotifyAsync(MonitorException ex)
         {
             var context = new NotifyContext
             {

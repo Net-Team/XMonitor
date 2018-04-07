@@ -46,19 +46,18 @@ namespace XMonitor.WebSite
         /// <returns></returns>
         protected override async Task OnCheckMonitorAsync()
         {
-            await this.httpStatusApi
-                .CheckAsync(this.Uri, base.Options.Timeout)
-                .Retry(base.Options.Retry)
-                .WhenCatch<HttpRequestException>();
-        }
-
-        /// <summary>
-        /// 执行检测产生异常时触发
-        /// </summary>
-        /// <param name="ex">异常</param>
-        protected override async Task OnCheckExceptionAsync(Exception ex)
-        {
-            await base.NotifyAsync(ex);
+            try
+            {
+                await this.httpStatusApi
+                    .CheckAsync(this.Uri, base.Options.Timeout)
+                    .Retry(base.Options.Retry)
+                    .WhenCatch<HttpRequestException>();
+            }
+            catch (HttpRequestException ex)
+            {
+                var exception = new WebSiteMonitorException(this.Uri, ex);
+                await base.NotifyAsync(exception);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using XMonitor.Core;
 
@@ -37,12 +38,16 @@ namespace XMonitor.Process
             {
                 if (this.ProcessInfo.IsRunning() == false)
                 {
+                    base.Options.Logger?.Debug("进程已经被停止，正在恢复.");
                     this.ProcessInfo.Start();
+                    base.Options.Logger?.Debug("进程已经被停止，已恢复启动..");
                 }
             }
-            catch (Exception ex)
+            catch (FileNotFoundException ex)
             {
-                await base.NotifyAsync(ex);
+                var message = "进程文件已被删除..";
+                base.Options.Logger?.Debug(message);
+                await base.NotifyAsync(new MonitorException(message, ex));
             }
         }
     }

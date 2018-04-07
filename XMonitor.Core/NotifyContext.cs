@@ -19,6 +19,6 @@ namespace XMonitor.Core
         /// <summary>
         /// 获取或设置异常内容
         /// </summary>
-        public Exception Exception { get; set; }
+        public MonitorException Exception { get; set; }
     }
 }

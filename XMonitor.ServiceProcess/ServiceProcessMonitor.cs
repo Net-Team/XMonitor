@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
@@ -48,9 +49,17 @@ namespace XMonitor.ServiceProcess
                     base.Options.Logger?.Debug("服务已经被停止，已恢复启动..");
                 }
             }
-            catch (Exception ex)
+            catch (Win32Exception ex)
             {
-                await base.NotifyAsync(ex);
+                var message = "服务已经被停止，启动失败..";
+                base.Options.Logger?.Debug(message);
+                await base.NotifyAsync(new MonitorException(message, ex));
+            }
+            catch (InvalidOperationException ex)
+            {
+                var message = "服务已经被停止，启动失败..";
+                base.Options.Logger?.Debug(message);
+                await base.NotifyAsync(new MonitorException(message, ex));
             }
         }
 
