@@ -49,7 +49,7 @@ namespace XMonitor.Process
             }
             catch (FileNotFoundException ex)
             {
-                var message = "进程文件已被删除..";
+                var message = $"进程文件{this.ProcessInfo.FilePath}不存在..";
                 await base.NotifyAsync(new MonitorException(message, ex));
             }
         }

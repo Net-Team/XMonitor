@@ -32,18 +32,11 @@ namespace XMonitor.Process
         /// <param name="arguments">启动参数字符串</param>
         /// <param name="workingDirectory">工作路径</param>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="FileNotFoundException"></exception>
-        /// 
         public ProcessInfo(string filePath, string arguments = null, string workingDirectory = null)
         {
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException(filePath);
-            }
-
-            if (File.Exists(filePath) == false)
-            {
-                throw new FileNotFoundException(filePath);
             }
 
             this.FilePath = Path.GetFullPath(filePath);
