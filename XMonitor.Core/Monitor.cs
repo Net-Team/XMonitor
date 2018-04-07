@@ -139,6 +139,7 @@ namespace XMonitor.Core
                 try
                 {
                     await channel?.NotifyAsync(context);
+                    this.Options.Logger?.Debug(context.Exception.Message);
                 }
                 catch (Exception channelEx)
                 {

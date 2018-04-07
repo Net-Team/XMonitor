@@ -45,13 +45,11 @@ namespace XMonitor.Process
             }
             catch (InvalidOperationException ex)
             {
-                base.Options.Logger?.Debug(ex.Message);
                 await base.NotifyAsync(new MonitorException(ex));
             }
             catch (FileNotFoundException ex)
             {
                 var message = "进程文件已被删除..";
-                base.Options.Logger?.Debug(message);
                 await base.NotifyAsync(new MonitorException(message, ex));
             }
         }
