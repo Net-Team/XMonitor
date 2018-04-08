@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XMonitor.Process", "XMonito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XMonitor.DriveInfo", "XMonitor.DriveInfo\XMonitor.DriveInfo.csproj", "{03ED0A73-FE7B-40E1-9B6A-F0EC02B11A29}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monitors", "Monitors", "{58F088FA-6923-42EC-93E4-53993CD36449}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +56,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27170B41-53DC-4F28-8B46-5517642B1679} = {58F088FA-6923-42EC-93E4-53993CD36449}
+		{C2DCA98E-CA36-4FCC-BFDF-01015E7BED48} = {58F088FA-6923-42EC-93E4-53993CD36449}
+		{8169AF1D-3DD6-4B41-83B2-FF23DB574D6C} = {58F088FA-6923-42EC-93E4-53993CD36449}
+		{03ED0A73-FE7B-40E1-9B6A-F0EC02B11A29} = {58F088FA-6923-42EC-93E4-53993CD36449}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BE6D953A-9EA8-465E-8126-D8C45F1782EA}
