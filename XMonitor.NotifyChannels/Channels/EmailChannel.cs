@@ -54,7 +54,7 @@ namespace XMonitor.NotifyChannels
                 SubjectEncoding = Encoding.UTF8,
                 Body = body,
                 BodyEncoding = Encoding.UTF8,
-                IsBodyHtml = true,
+                IsBodyHtml = false,
             };
 
             foreach (var item in this.opt.TargetEmails.Distinct())
