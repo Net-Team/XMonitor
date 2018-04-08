@@ -58,14 +58,9 @@ namespace XMonitor.Core
         /// <exception cref="ArgumentNullException"></exception>
         public Monitor(TOptions options, string alias, object value)
         {
-            if (string.IsNullOrEmpty(alias))
-            {
-                throw new ArgumentNullException(nameof(alias));
-            }
-
-            this.Alias = alias;
-            this.Value = value ?? throw new ArgumentNullException(nameof(value));
             this.Options = options ?? throw new ArgumentNullException(nameof(options));
+            this.Alias = alias ?? throw new ArgumentNullException(nameof(alias));
+            this.Value = value ?? throw new ArgumentNullException(nameof(value));
 
             this.timer = new Timer(async (state) =>
             {
@@ -124,26 +119,25 @@ namespace XMonitor.Core
         /// <summary>
         /// 监控通知异常
         /// </summary>
-        /// <param name="ex">异常消息</param>
+        /// <param name="exception">异常消息</param>
         /// <returns></returns>
-        protected virtual async Task NotifyAsync(MonitorException ex)
+        protected virtual async Task NotifyAsync(MonitorException exception)
         {
             var context = new NotifyContext
             {
                 Monitor = this,
-                Exception = ex
+                Exception = exception
             };
 
             foreach (var channel in this.Options.NotifyChannels)
             {
                 try
                 {
-                    await channel?.NotifyAsync(context);
-                    this.Options.Logger?.Debug(context.Exception.Message);
+                    await channel?.NotifyAsync(context);                  
                 }
-                catch (Exception channelEx)
+                catch (Exception ex)
                 {
-                    this.Options.Logger?.Error(channelEx);
+                    this.Options.Logger?.Error(ex);
                 }
             }
         }

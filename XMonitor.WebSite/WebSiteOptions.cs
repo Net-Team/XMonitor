@@ -7,7 +7,7 @@ using XMonitor.Core;
 namespace XMonitor.WebSite
 {
     /// <summary>
-    /// 表示站点状态监控的配置项
+    /// 表示站点监控的配置项
     /// </summary>
     public class WebSiteOptions : IMonitorOptions
     {

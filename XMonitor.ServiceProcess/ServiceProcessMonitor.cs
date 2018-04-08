@@ -8,7 +8,7 @@ using XMonitor.Core;
 namespace XMonitor.ServiceProcess
 {
     /// <summary>
-    /// 表示服务服务监控
+    /// 表示服务监控对象
     /// </summary>
     class ServiceProcessMonitor : Monitor<ServiceProcessOptions>
     {
@@ -18,7 +18,7 @@ namespace XMonitor.ServiceProcess
         public string ServiceName { get; private set; }
 
         /// <summary>
-        /// 构造服务监控对象
+        /// 服务监控对象
         /// </summary>
         /// <param name="options">服务选项</param>
         /// <param name="alias">服务别名</param>

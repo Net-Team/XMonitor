@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="MonitorCollection.cs" />
-    <Compile Remove="ServiceProcessMonitorService.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\XMonitor.Core\XMonitor.Core.csproj" />
   </ItemGroup>
 </Project>

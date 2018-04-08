@@ -7,9 +7,9 @@ using XMonitor.Core;
 namespace XMonitor.WebSite
 {
     /// <summary>
-    /// 表示站点对象
+    /// 表示站点监控对象
     /// </summary>
-    public class WebSiteMonitor : Monitor<WebSiteOptions>
+    class WebSiteMonitor : Monitor<WebSiteOptions>
     {
         /// <summary>
         /// api客户端
@@ -17,12 +17,12 @@ namespace XMonitor.WebSite
         private readonly IHttpStatusApi httpStatusApi;
 
         /// <summary>
-        /// 获取网址
+        /// 获取站点的网址
         /// </summary>
         public Uri Uri { get; }
 
         /// <summary>
-        /// 构造站点监控对象
+        /// 站点监控对象
         /// </summary>
         /// <param name="options">监控选项</param>
         /// <param name="alias">站点名称</param>
