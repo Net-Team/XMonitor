@@ -15,15 +15,13 @@ namespace XMonitor
                     n.Smtp = "mail.taichuan.com";
                     n.SenderAccout = "iot@taichaun.com";
                     n.SenderPassword = "tc123457";
-                    n.TargetEmails.Add("tangfeng@taichuan.com");
-                    n.Title = ctx => "v1.0" + ctx.Monitor.Alias;
+                    n.TargetEmails.Add("tangfeng@taichuan.com");                  
                 });
 
                 opt.AddHttpNotifyChannel(n =>
                 {
                     n.Uri = new Uri("http://www.baidu.com");
-                    n.Header.Add(new KeyValuePair<string, string>("key", "value"));
-                    n.Title = ctx => new KeyValuePair<string, string>("myTitle", ctx.Monitor.Alias + "v1.0");
+                    n.Header.Add(new KeyValuePair<string, string>("key", "value"));                  
                 });
                 opt.Logger = new ConsoleLogger();
             });

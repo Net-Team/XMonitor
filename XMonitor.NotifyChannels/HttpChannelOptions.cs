@@ -7,7 +7,7 @@ namespace XMonitor.NotifyChannels
     /// <summary>
     /// Http 消息通知选项
     /// </summary>
-    public class HttpChannelOptions 
+    public class HttpChannelOptions
     {
         /// <summary>
         /// 或取或设置接收者接口地址
@@ -23,12 +23,12 @@ namespace XMonitor.NotifyChannels
         /// HttpContent参数 
         /// 或取或设置消息标题参数委托
         /// </summary>
-        public Func<NotifyContext, KeyValuePair<string, string>> Title { get; set; } = ctx => new KeyValuePair<string, string>("Title", ctx.Monitor.Alias);
+        public Func<NotifyContext, KeyValuePair<string, string>> Title { get; set; } = ctx => new KeyValuePair<string, string>("Title", ctx.ToTitle());
 
         /// <summary>
         /// HttpContent参数 
         /// 或取或设置消息内容委托
         /// </summary>
-        public Func<NotifyContext, KeyValuePair<string, string>> Message { get; set; } = ctx => new KeyValuePair<string, string>("Message", ctx.Exception.Message);
+        public Func<NotifyContext, KeyValuePair<string, string>> Message { get; set; } = ctx => new KeyValuePair<string, string>("Message", ctx.ToMessage());
     }
 }

@@ -45,12 +45,12 @@ namespace XMonitor.NotifyChannels
         /// 邮件参数 
         ///或取或设置 邮件标题参数委托
         /// </summary>
-        public Func<NotifyContext, string> Title { get; set; } = ctx => ctx.Monitor.Alias;
+        public Func<NotifyContext, string> Title { get; set; } = ctx => ctx.ToTitle();
 
         /// <summary>
         /// 邮件参数 
         /// 或取或设置邮件内容委托
         /// </summary>
-        public Func<NotifyContext, string> Message { get; set; } = ctx => ctx.Exception.Message;
+        public Func<NotifyContext, string> Message { get; set; } = ctx => ctx.ToMessage();
     }
 }
